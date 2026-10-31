@@ -1,0 +1,39 @@
+{
+  "name": "gaming-pc-server",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "targets": {
+    "check": {
+      "command": "make check",
+      "options": { "cwd": "{projectRoot}" }
+    },
+    "build-wsl": {
+      "command": "make build-wsl",
+      "options": { "cwd": "{projectRoot}" }
+    },
+    "test": {
+      "command": "make test",
+      "options": { "cwd": "{projectRoot}", "tty": true }
+    },
+    "ssh-test": {
+      "command": "make ssh-test",
+      "options": { "cwd": "{projectRoot}", "tty": true }
+    },
+    "update": {
+      "command": "make update",
+      "options": { "cwd": "{projectRoot}" }
+    },
+    "clean": {
+      "command": "make clean",
+      "options": { "cwd": "{projectRoot}" }
+    },
+    "build": {
+      "command": "nixos-rebuild build --flake .#gaming-pc-server",
+      "options": { "cwd": "{projectRoot}" }
+    },
+    "switch": {
+      "command": "sudo nixos-rebuild switch --flake .#gaming-pc-server",
+      "options": { "cwd": "{projectRoot}", "tty": true }
+    }
+  }
+}

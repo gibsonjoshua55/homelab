@@ -1,0 +1,4 @@
+# nix build output
+result
+result-*
+.cache/
