@@ -24,11 +24,18 @@
     graphics = false;
     memorySize = 4096;
     cores = 4;
+    # The default 1 GB disk is too small for Docker images like Mealie's. In MB.
+    diskSize = 8192;
     forwardPorts = [
       {
         from = "host";
         host.port = 2222;
         guest.port = 22;
+      }
+      {
+        from = "host";
+        host.port = 9000;
+        guest.port = 9000;
       }
     ];
   };

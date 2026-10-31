@@ -22,7 +22,7 @@ _build-wsl:
 
 ## Boot the shared config in a local QEMU VM (inside Docker). Fresh disk each run.
 test:
-	$(NIX) -it --name gaming-pc-server-test -p 2222:2222 nixos/nix sh -c '\
+	$(NIX) -it --name gaming-pc-server-test -p 2222:2222 -p 9000:9000 nixos/nix sh -c '\
 	  nix build -o .cache/test-vm-$(ARCH) \
 	    .#nixosConfigurations.test-vm-$(ARCH).config.system.build.vm && \
 	  cd /tmp && exec /work/.cache/test-vm-$(ARCH)/bin/run-gaming-pc-server-test-vm'

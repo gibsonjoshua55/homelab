@@ -3,6 +3,8 @@
 { pkgs, ... }:
 
 {
+  imports = [ ./services/mealie.nix ];
+
   networking.hostName = "gaming-pc-server";
 
   nix.settings.experimental-features = [
