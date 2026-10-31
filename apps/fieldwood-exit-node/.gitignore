@@ -1,0 +1,5 @@
+# Real secrets (Tailscale auth key, SSH keys) — never commit
+secrets/
+# Generated Ignition, ISOs, VM disks
+build/
+.cache/

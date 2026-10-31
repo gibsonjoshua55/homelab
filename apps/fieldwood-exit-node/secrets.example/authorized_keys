@@ -1,0 +1,2 @@
+# Copy to secrets/authorized_keys and replace with your public key(s), one per line.
+ssh-ed25519 AAAA...replace-me... you@laptop

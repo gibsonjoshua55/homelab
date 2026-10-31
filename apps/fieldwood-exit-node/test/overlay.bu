@@ -1,0 +1,16 @@
+# Test-only changes: a throwaway SSH key and a distinct hostname, so test
+# VMs don't collide with the real NUC.
+variant: fcos
+version: 1.6.0
+passwd:
+  users:
+    - name: core
+      ssh_authorized_keys_local:
+        - .cache/test_ed25519.pub
+storage:
+  files:
+    - path: /etc/hostname
+      mode: 0644
+      overwrite: true
+      contents:
+        inline: tailscale-exit-test

@@ -1,0 +1,9 @@
+# Test config: the real config with test/overlay.bu applied on top.
+# Ignition merges in order, and later configs win.
+variant: fcos
+version: 1.6.0
+ignition:
+  config:
+    merge:
+      - local: build/config.ign
+      - local: build/test-overlay.ign

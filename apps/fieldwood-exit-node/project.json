@@ -1,0 +1,30 @@
+{
+  "name": "fieldwood-exit-node",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "targets": {
+    "ignition": {
+      "command": "make ignition",
+      "options": { "cwd": "{projectRoot}" }
+    },
+    "iso": {
+      "command": "make iso",
+      "options": { "cwd": "{projectRoot}" }
+    },
+    "test": {
+      "command": "make test",
+      "options": { "cwd": "{projectRoot}", "tty": true }
+    },
+    "ssh-test": {
+      "command": "make ssh-test",
+      "options": { "cwd": "{projectRoot}", "tty": true }
+    },
+    "ssh": {
+      "command": "tailscale ssh core@fieldwood-exit-node"
+    },
+    "clean": {
+      "command": "make clean",
+      "options": { "cwd": "{projectRoot}" }
+    }
+  }
+}

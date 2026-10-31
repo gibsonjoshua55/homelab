@@ -1,0 +1,113 @@
+# Fedora CoreOS config for a Tailscale exit node.
+# Build with `make ignition` (output: build/config.ign).
+variant: fcos
+version: 1.6.0
+
+passwd:
+  users:
+    - name: core
+      ssh_authorized_keys_local:
+        - secrets/authorized_keys
+
+storage:
+  files:
+    - path: /etc/hostname
+      mode: 0644
+      contents:
+        inline: tailscale-exit
+
+    # Exit nodes must forward traffic.
+    - path: /etc/sysctl.d/90-tailscale.conf
+      mode: 0644
+      contents:
+        inline: |
+          net.ipv4.ip_forward = 1
+          net.ipv6.conf.all.forwarding = 1
+
+    - path: /etc/tailscale/tailscale.env
+      mode: 0600
+      contents:
+        local: secrets/tailscale.env
+
+    # Tailscale's official Fedora repo. rpm-ostree re-resolves layered
+    # packages on every OS update, so Tailscale updates along with the OS.
+    - path: /etc/yum.repos.d/tailscale.repo
+      mode: 0644
+      contents:
+        inline: |
+          [tailscale-stable]
+          name=Tailscale stable
+          baseurl=https://pkgs.tailscale.com/stable/fedora/$basearch
+          enabled=1
+          type=rpm
+          repo_gpgcheck=1
+          gpgcheck=1
+          gpgkey=https://pkgs.tailscale.com/stable/fedora/repo.gpg
+
+    # Only reboot for OS (and Tailscale) updates 08:00-09:00 UTC.
+    - path: /etc/zincati/config.d/55-updates-strategy.toml
+      mode: 0644
+      contents:
+        inline: |
+          [updates]
+          strategy = "periodic"
+
+          [[updates.periodic.window]]
+          days = [ "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun" ]
+          start_time = "08:00"
+          length_minutes = 60
+
+systemd:
+  units:
+    # First boot only: layer the tailscale package and start it without a
+    # reboot. Runs before Zincati so an update can't reboot mid-install.
+    - name: tailscale-install.service
+      enabled: true
+      contents: |
+        [Unit]
+        Description=Layer tailscale with rpm-ostree
+        Wants=network-online.target
+        After=network-online.target
+        Before=zincati.service
+        ConditionPathExists=!/usr/bin/tailscale
+
+        [Service]
+        Type=oneshot
+        RemainAfterExit=yes
+        ExecStart=/usr/bin/rpm-ostree install --apply-live --allow-inactive --idempotent tailscale
+        ExecStart=/usr/bin/systemctl daemon-reload
+        ExecStart=/usr/bin/systemctl enable --now tailscaled.service
+
+        [Install]
+        WantedBy=multi-user.target
+
+    # Shipped by the package; this drop-in is in place before it lands.
+    - name: tailscaled.service
+      dropins:
+        - name: firewall.conf
+          contents: |
+            [Service]
+            # FCOS kernels lack legacy iptables; exit-node NAT needs nftables.
+            Environment=TS_DEBUG_FIREWALL_MODE=nftables
+
+    # Log in, advertise as an exit node, and enable Tailscale SSH. The auth
+    # key is only used if the node isn't logged in yet; with no key, the
+    # login URL is in `journalctl -u tailscale-up`.
+    - name: tailscale-up.service
+      enabled: true
+      contents: |
+        [Unit]
+        Description=Bring up Tailscale as an exit node
+        Wants=tailscaled.service
+        After=tailscale-install.service tailscaled.service
+        ConditionPathExists=/usr/bin/tailscale
+
+        [Service]
+        Type=oneshot
+        RemainAfterExit=yes
+        EnvironmentFile=/etc/tailscale/tailscale.env
+        ExecStart=/bin/sh -c 'exec /usr/bin/tailscale up --advertise-exit-node --ssh $${TS_AUTHKEY:+--auth-key="$$TS_AUTHKEY"}'
+        TimeoutStartSec=infinity
+
+        [Install]
+        WantedBy=multi-user.target
