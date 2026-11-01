@@ -15,8 +15,22 @@
       "command": "make test",
       "options": { "cwd": "{projectRoot}", "tty": true }
     },
+    "ssh-windows": {
+      "command": "ssh jcgla@josh-desktop"
+    },
+    "ssh": {
+      "command": "ssh nixos@gaming-pc-server"
+    },
     "ssh-test": {
       "command": "make ssh-test",
+      "options": { "cwd": "{projectRoot}", "tty": true }
+    },
+    "copy-to-pc": {
+      "command": "make copy-to-pc",
+      "options": { "cwd": "{projectRoot}" }
+    },
+    "deploy": {
+      "command": "make deploy",
       "options": { "cwd": "{projectRoot}", "tty": true }
     },
     "update": {
@@ -26,14 +40,6 @@
     "clean": {
       "command": "make clean",
       "options": { "cwd": "{projectRoot}" }
-    },
-    "build": {
-      "command": "nixos-rebuild build --flake .#gaming-pc-server",
-      "options": { "cwd": "{projectRoot}" }
-    },
-    "switch": {
-      "command": "sudo nixos-rebuild switch --flake .#gaming-pc-server",
-      "options": { "cwd": "{projectRoot}", "tty": true }
     }
   }
 }

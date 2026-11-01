@@ -3,7 +3,10 @@
 { pkgs, ... }:
 
 {
-  imports = [ ./services/mealie.nix ];
+  imports = [
+    ./tailscale-serve.nix
+    ./services/mealie.nix
+  ];
 
   networking.hostName = "gaming-pc-server";
 
@@ -11,9 +14,13 @@
     "nix-command"
     "flakes"
   ];
+  # `nx deploy` copies unsigned build inputs from the Mac; only trusted
+  # users may add those to the store.
+  nix.settings.trusted-users = [ "@wheel" ];
 
-  # Log in once by hand with `sudo tailscale up --ssh`; the login persists
-  # in /var/lib/tailscale across rebuilds and restarts.
+  # Log in once by hand with `sudo tailscale up --ssh --advertise-tags=tag:server`;
+  # the login and tag persist in /var/lib/tailscale across rebuilds and
+  # restarts. The tag is required to host Tailscale Services.
   services.tailscale = {
     enable = true;
     openFirewall = true;

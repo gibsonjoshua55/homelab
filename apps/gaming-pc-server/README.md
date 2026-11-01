@@ -17,10 +17,10 @@ Run these from the repo root. Each target is defined in
 | Mac        | Check every config evaluates       | `npx nx check gaming-pc-server`                                                         |
 | Mac        | Try the config in a local VM       | `npx nx test gaming-pc-server` (then `npx nx ssh-test gaming-pc-server` in another tab) |
 | Mac        | Build the real WSL system          | `npx nx build-wsl gaming-pc-server` (x86_64 under emulation: slow)                      |
+| Mac        | Copy the folder to Windows (setup) | `npx nx copy-to-pc gaming-pc-server`                                                    |
+| Mac        | Apply the config to the PC         | `npx nx deploy gaming-pc-server`                                                        |
 | Mac        | Bump nixpkgs/NixOS-WSL             | `npx nx update gaming-pc-server`                                                        |
 | Mac        | Delete VM output and the Nix cache | `npx nx clean gaming-pc-server`                                                         |
-| PC, in WSL | Build without applying             | `npx nx build gaming-pc-server`                                                         |
-| PC, in WSL | Build and apply the config         | `npx nx switch gaming-pc-server`                                                        |
 
 ## How the config is split
 
@@ -71,8 +71,9 @@ on Windows. If Windows runs Tailscale too, the PC shows up twice on the
 tailnet (as the Windows machine and as `gaming-pc-server`). That's
 expected.
 
-You need Windows 11, an admin account, and this repo pushed somewhere the
-PC can clone it from.
+You need Windows 11 and an admin account. The PC never needs git access:
+you copy the config over once for the first switch, and after that the Mac
+pushes changes with `npx nx deploy`.
 
 ### 1. Install WSL
 
@@ -111,16 +112,27 @@ Docker inside NixOS, and the two would fight over the socket.
 
 ### 3. Apply this config
 
-Open the distro (`wsl -d NixOS`). The stock image has neither git nor
-Node.js, so borrow them for the first switch:
+Tailscale isn't running yet, so the Mac can't deploy. Do the first switch
+on the PC instead. First get this folder onto the Windows drive. If the Mac
+can already SSH into Windows (the `ssh` target), run this from the Mac:
 
 ```sh
-nix-shell -p git nodejs
-git clone <this repo> ~/homelab && cd ~/homelab
-npm ci
-npx nx switch gaming-pc-server
-exit   # leave nix-shell; git is installed for good now
+npx nx copy-to-pc gaming-pc-server   # lands in C:\Users\<you>\gaming-pc-server
 ```
+
+It connects to `jcgla@josh-desktop`; set `WINDOWS_HOST=user@host` to
+change that. Otherwise, copy the folder over by hand or download the repo
+as a zip. WSL sees the Windows drive under `/mnt/c`.
+
+Open the distro (`wsl -d NixOS`) and switch to the config:
+
+```sh
+cd /mnt/c/Users/<you>/gaming-pc-server
+sudo env NIX_CONFIG='experimental-features = nix-command flakes' \
+  nixos-rebuild switch --flake .#gaming-pc-server
+```
+
+You can delete the folder afterwards.
 
 Then restart the distro from PowerShell so the new hostname and settings
 take effect:
@@ -135,17 +147,17 @@ wsl -d NixOS
 Inside NixOS:
 
 ```sh
-sudo tailscale up --ssh
+sudo tailscale up --ssh --advertise-tags=tag:server
 ```
 
-Open the login URL it prints and approve the device. The login is stored in
+The tag has to exist in the tailnet policy file first (see
+[Tailscale Services](#tailscale-services)). Open the login URL it prints and
+approve the device. The login is stored in
 `/var/lib/tailscale`, so you only do this once. `--ssh` turns on Tailscale
 SSH: tailnet devices can run `ssh nixos@gaming-pc-server` without any SSH
 keys. Tailscale access rules decide who can connect.
 
-In the [admin console](https://login.tailscale.com/admin/machines), open
-`gaming-pc-server` and choose **Disable key expiry**. Otherwise the node
-drops off the tailnet after about six months until you log in again.
+Tagged nodes don't expire, so you don't need to disable key expiry.
 
 The test VM runs Tailscale too, but stays logged out unless you run this
 command in it.
@@ -203,7 +215,7 @@ Reboot Windows and **don't log in**. From another device on the tailnet:
 
 ```sh
 ssh nixos@gaming-pc-server          # Tailscale SSH, no keys
-curl -I http://gaming-pc-server:9000  # Mealie
+curl -I https://mealie.tail65441.ts.net  # Mealie, via Tailscale Services
 ```
 
 If both work, setup is done. If the PC doesn't appear on the tailnet until
@@ -221,21 +233,69 @@ systemctl status docker-mealie    # Mealie container
 
 ### 7. Finish setting up Mealie
 
-Open `http://gaming-pc-server:9000` and sign in with Mealie's default
+Open `https://mealie.tail65441.ts.net` and sign in with Mealie's default
 admin account (`changeme@example.com` / `MyPassword`). Change the email and
 password right away. Sign-ups are off, so invite other users from Mealie's
 admin settings.
 
+## Tailscale Services
+
+Mealie is published as the Tailscale Service `svc:mealie`, at
+`https://mealie.tail65441.ts.net`. Tailscale handles HTTPS and proxies to
+`localhost:9000`. Service files declare their endpoints with
+`homelab.tailscaleServe.services`, and
+[nix/tailscale-serve.nix](nix/tailscale-serve.nix) applies them on boot and
+on every deploy.
+
+Some of the setup lives in the tailnet, not in this config:
+
+- **Policy file:** only tagged nodes can host services, and a tagged node
+  isn't covered by the default "your own devices" SSH rule. Add both:
+  ```jsonc
+  "tagOwners": { "tag:server": ["autogroup:admin"] },
+  "ssh": [
+    { "action": "accept", "src": ["autogroup:admin"], "dst": ["tag:server"], "users": ["nixos", "root"] },
+  ],
+  ```
+- **New services:** create each one under
+  [Services](https://login.tailscale.com/admin/services) in the admin console
+  before deploying it. If the host advertised the service before it existed,
+  re-send the advertisement with
+  `sudo tailscale serve drain svc:<name> && sudo tailscale serve advertise svc:<name>`.
+- **Approval:** approve the host on the service's page. To skip that step,
+  add the service to `autoApprovers.services` in the policy file.
+
+Check what the node is serving with `sudo tailscale serve status`, and see
+whether the config applied with `systemctl status tailscale-serve`.
+
 ## Changing the config
 
 Edit the config, run `npx nx test gaming-pc-server` on the Mac to try it,
-commit, then pull on the PC and run `npx nx switch gaming-pc-server`. To
-undo a bad change on the PC, run `sudo nixos-rebuild switch --rollback`.
+then apply it to the PC:
 
-Nix only sees files that git tracks. If you add a new `.nix` file,
-`git add` it before switching on the PC, or you'll get a "path does not
-exist" error. The Mac targets mount only this folder, so they don't have
-this problem.
+```sh
+npx nx deploy gaming-pc-server
+```
+
+This evaluates the config on the Mac (inside Docker), so mistakes fail
+before anything reaches the PC. Then it builds on the PC over Tailscale
+SSH, natively and mostly from the NixOS binary cache, and switches to the
+new system. The Mac must be on the tailnet. Committing first is up to you:
+`deploy` sends what's in this folder now. Only this folder is mounted, so
+Nix sees every file, git-tracked or not.
+
+If Tailscale SSH asks you to approve the login in a browser, open the URL
+it prints. If the container can't resolve `gaming-pc-server`, pass the
+full MagicDNS name or the 100.x address:
+
+```sh
+DEPLOY_HOST=nixos@100.x.y.z npx nx deploy gaming-pc-server
+```
+
+`deploy` needs the first switch (step 3) done, because that's what lets
+the `nixos` user receive builds from the Mac (`nix.settings.trusted-users`).
+
+To undo a bad change, run `sudo nixos-rebuild switch --rollback` on the PC.
 
 `system.stateVersion` records the release first installed. Leave it alone
 when upgrading nixpkgs.
@@ -248,8 +308,9 @@ flake.lock             Exact pinned versions (commit it)
 nix/common.nix         Shared config: goes on the PC and into the test VM
 nix/wsl.nix            WSL-only settings
 nix/test-vm.nix        Test-VM-only settings (user, SSH, QEMU options)
+nix/tailscale-serve.nix  Applies the Tailscale Services that service files declare
 nix/services/          One file per hosted service (e.g. mealie.nix), imported from common.nix
 project.json           Nx targets
 Makefile               What the Mac targets run; Nix runs inside Docker
-.cache/                Built VM link (gitignored)
+.cache/                Built VM link and deploy's SSH known_hosts (gitignored)
 ```

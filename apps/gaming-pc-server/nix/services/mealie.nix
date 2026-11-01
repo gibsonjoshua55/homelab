@@ -22,7 +22,10 @@ in
     environment = {
       ALLOW_SIGNUP = "false";
       TZ = "America/New_York";
-      BASE_URL = "http://gaming-pc-server:${toString port}";
+      BASE_URL = "https://mealie.tail65441.ts.net";
     };
   };
+
+  # Served over HTTPS at https://mealie.tail65441.ts.net; see tailscale-serve.nix.
+  homelab.tailscaleServe.services.mealie."tcp:443" = "http://localhost:${toString port}";
 }
