@@ -6,7 +6,7 @@ STREAM  ?= stable
 SSH_OPTS := -i .cache/test_ed25519 -p 2222 \
 	-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR
 
-.PHONY: tools ignition iso test ssh clean
+.PHONY: tools ignition iso flash test ssh clean
 
 tools:
 	docker build -q -t $(TOOLS) test >/dev/null
@@ -22,7 +22,7 @@ ignition: tools secrets/tailscale.env secrets/authorized_keys
 
 ## build/nuc-install.iso: USB installer that WIPES $(DEST_DEVICE) and installs unattended
 iso: ignition
-	@test -n "$(DEST_DEVICE)" || { echo "Set DEST_DEVICE, e.g. make iso DEST_DEVICE=/dev/nvme0n1" >&2; exit 1; }
+	@test -n "$(DEST_DEVICE)" || { echo "Set DEST_DEVICE, e.g. make iso DEST_DEVICE=/dev/sda" >&2; exit 1; }
 	@mkdir -p .cache/images/x86_64
 	$(RUN) sh -c 'set -e; \
 	  iso=$$(coreos-installer download -s $(STREAM) -p metal -f iso -a x86_64 -C .cache/images/x86_64); \
@@ -30,6 +30,10 @@ iso: ignition
 	  coreos-installer iso customize --dest-device $(DEST_DEVICE) \
 	    --dest-ignition build/config.ign -o build/nuc-install.iso "$$iso"'
 	@echo "Wrote build/nuc-install.iso (installs to $(DEST_DEVICE))"
+
+## Write build/nuc-install.iso to the USB stick mounted at /Volumes/$(VOLUME) (prompts if unset)
+flash:
+	./flash-usb.sh $(VOLUME)
 
 .cache/test_ed25519:
 	@mkdir -p .cache

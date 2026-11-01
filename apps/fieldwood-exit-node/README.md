@@ -11,19 +11,22 @@ coreos-installer and QEMU all run in a tools container built from
 
 ## Quick reference
 
-Run these from the repo root. Each target is defined in
+Every command in this README runs from the **monorepo root**. File paths
+in the text (`config.bu`, `secrets/`, `build/`, …) are relative to
+`apps/fieldwood-exit-node/`. Each target is defined in
 [`project.json`](project.json) and delegates to the `Makefile` in this
 directory.
 
-| I want to…                        | Run                                                                                           |
-| --------------------------------- | --------------------------------------------------------------------------------------------- |
-| Build the Ignition config         | `npx nx ignition fieldwood-exit-node` → `build/config.ign`                                    |
-| Build a USB installer for the NUC | `DEST_DEVICE=/dev/nvme0n1 npx nx iso fieldwood-exit-node`                                     |
-| Try the config in a local VM      | `npx nx test fieldwood-exit-node` (then `npx nx ssh-test fieldwood-exit-node` in another tab) |
-| Same, with the NUC's CPU arch     | `ARCH=x86_64 npx nx test fieldwood-exit-node`                                                 |
-| Delete build output and VM disks  | `npx nx clean fieldwood-exit-node` (keeps downloaded FCOS images)                             |
+| I want to…                         | Run                                                                                           |
+| ---------------------------------- | --------------------------------------------------------------------------------------------- |
+| Build the Ignition config          | `npx nx ignition fieldwood-exit-node` → `build/config.ign`                                    |
+| Build a USB installer for the NUC  | `DEST_DEVICE=/dev/sda npx nx iso fieldwood-exit-node`                                         |
+| Write the installer to a USB stick | `VOLUME=ESD-USB npx nx flash fieldwood-exit-node`                                             |
+| Try the config in a local VM       | `npx nx test fieldwood-exit-node` (then `npx nx ssh-test fieldwood-exit-node` in another tab) |
+| Same, with the NUC's CPU arch      | `ARCH=x86_64 npx nx test fieldwood-exit-node`                                                 |
+| Delete build output and VM disks   | `npx nx clean fieldwood-exit-node` (keeps downloaded FCOS images)                             |
 
-Target variables such as `DEST_DEVICE`, `ARCH` and `STREAM` are passed as
+Target variables such as `DEST_DEVICE`, `VOLUME`, `ARCH` and `STREAM` are passed as
 environment variables, as shown above. `npx nx <target> fieldwood-exit-node`
 is shorthand for `npx nx run fieldwood-exit-node:<target>`.
 
@@ -39,7 +42,7 @@ edits to `config.bu` do nothing to a machine that's already running. See
 
 - **SSH**: your key(s) from `secrets/authorized_keys` for the `core` user
   (passwordless `sudo`).
-- **Hostname**: `tailscale-exit`.
+- **Hostname**: `fieldwood-exit-node`.
 - **IP forwarding**: on for IPv4 and IPv6, which exit nodes need.
 - **Tailscale**:
   - Adds Tailscale's official Fedora repo.
@@ -71,11 +74,14 @@ edits to `config.bu` do nothing to a machine that's already running. See
 ## First-time setup
 
 ```sh
-mkdir -p secrets
-cp secrets.example/* secrets/
-# edit secrets/authorized_keys  -> your SSH public key(s), one per line
-# edit secrets/tailscale.env    -> TS_AUTHKEY=tskey-auth-...
+mkdir -p apps/fieldwood-exit-node/secrets
+cp apps/fieldwood-exit-node/secrets.example/* apps/fieldwood-exit-node/secrets/
 ```
+
+Then edit the two files:
+
+- `secrets/authorized_keys`: your SSH public key(s), one per line.
+- `secrets/tailscale.env`: `TS_AUTHKEY=tskey-auth-...`
 
 `secrets/` is gitignored, so it won't be on a fresh clone. Recreate it as
 shown above.
@@ -89,9 +95,17 @@ LAN.
 
 ## Test in a local VM
 
+Same CPU arch as this Mac (aarch64), which is faster:
+
 ```sh
-npx nx test fieldwood-exit-node               # same arch as this Mac (aarch64): faster
-ARCH=x86_64 npx nx test fieldwood-exit-node   # same arch as the NUC: slower, closest to real
+npx nx test fieldwood-exit-node
+```
+
+Same CPU arch as the NUC (x86_64), which is slower but closest to the real
+machine:
+
+```sh
+ARCH=x86_64 npx nx test fieldwood-exit-node
 ```
 
 This boots a fresh FCOS VM with QEMU inside Docker. Docker Desktop on a Mac
@@ -101,7 +115,7 @@ X** to quit.
 
 The VM uses the real config, plus two test-only overrides from
 [`test/overlay.bu`](test/overlay.bu): a throwaway SSH key and the hostname
-`tailscale-exit-test`. To check it from another terminal:
+`fieldwood-exit-node-test`. To check it from another terminal:
 
 ```sh
 npx nx ssh-test fieldwood-exit-node
@@ -124,19 +138,55 @@ separate file.
 
 > ⚠️ The installer **wipes `DEST_DEVICE` without asking**.
 
+Build the installer. `/dev/sda` assumes a SATA drive, see
+[Which `DEST_DEVICE`?](#which-dest_device):
+
 ```sh
-DEST_DEVICE=/dev/nvme0n1 npx nx iso fieldwood-exit-node    # or /dev/sda, whichever disk the NUC has
-diskutil list                        # find the USB stick, e.g. /dev/disk4
-diskutil unmountDisk /dev/diskN
-sudo dd if=build/nuc-install.iso of=/dev/rdiskN bs=4m
+DEST_DEVICE=/dev/sda npx nx iso fieldwood-exit-node
 ```
+
+Write it to the USB stick mounted at `/Volumes/ESD-USB`:
+
+```sh
+VOLUME=ESD-USB npx nx flash fieldwood-exit-node
+```
+
+`flash` runs [`flash-usb.sh`](flash-usb.sh) on the Mac. Without `VOLUME`,
+it lists your external disks and asks for the volume name. It then:
+
+1. Looks up the whole disk behind `/Volumes/<name>` (e.g. `disk5`), so you
+   never type a disk number.
+2. Refuses the disk unless it is physical, external and removable, which
+   rules out your Mac's own drive.
+3. Shows the disk's details and asks you to type the volume name again
+   to confirm.
+4. Unmounts the stick, writes the ISO with `dd` (`sudo` asks for your
+   password), then ejects it.
+
+This erases the stick. Afterwards it no longer mounts as `ESD-USB`, so to
+reuse it, plug it in and pass whatever name it now shows under `/Volumes`.
+If the stick doesn't mount at all, erase it as FAT32 in Disk Utility first.
 
 Each run downloads the latest FCOS `stable` ISO (cached in `.cache/`). Boot
 the NUC from the stick (F10 opens the boot menu on most NUCs). It installs
 and then reboots. Pull the stick out when it reboots.
 
-To find the right disk name, boot any Linux live USB on the NUC and run
-`lsblk`.
+#### Which `DEST_DEVICE`?
+
+This README assumes the NUC (2016, 6th gen) has a **SATA** drive, which is
+`/dev/sda`. That hasn't been checked yet. Its M.2 slot also takes NVMe
+drives, which show up as `/dev/nvme0n1`. To check, press **F2** at boot and
+see whether the BIOS lists the drive under SATA or under M.2 PCIe/NVMe.
+
+With a SATA drive, the USB stick is also an `sdX` device. The internal
+drive is usually `sda`, but that isn't guaranteed. To pin the drive
+exactly, boot any Linux live USB on the NUC, run
+`ls -l /dev/disk/by-id/ | grep -v part`, and use the internal drive's
+entry instead:
+
+```sh
+DEST_DEVICE=/dev/disk/by-id/ata-<model>_<serial> npx nx iso fieldwood-exit-node
+```
 
 ### Option B: by hand
 
@@ -144,26 +194,26 @@ Boot the stock FCOS live ISO, copy `build/config.ign` onto the machine (USB
 stick, `scp`, or `python3 -m http.server`), then run:
 
 ```sh
-sudo coreos-installer install /dev/nvme0n1 --ignition-file config.ign
+sudo coreos-installer install /dev/sda --ignition-file config.ign
 ```
 
 ### After installing
 
 In the [admin console](https://login.tailscale.com/admin/machines), find
-`tailscale-exit` and do two things:
+`fieldwood-exit-node` and do two things:
 
 1. **Edit route settings → Use as exit node.** It won't route traffic until
    you approve this.
 2. **Disable key expiry.** Otherwise the node logs out after about 180 days
    and you'll need LAN access to log it back in.
 
-Tailscale SSH (`ssh core@tailscale-exit`) only lets you in if your tailnet
+Tailscale SSH (`ssh core@fieldwood-exit-node`) only lets you in if your tailnet
 policy has an `ssh` rule that allows it. Plain SSH with your key over the LAN
 always works.
 
 ## Operating it
 
-Connect with `ssh core@tailscale-exit` over the tailnet, or use the NUC's LAN
+Connect with `ssh core@fieldwood-exit-node` over the tailnet, or use the NUC's LAN
 IP (check your router's DHCP list).
 
 ```sh
@@ -231,8 +281,9 @@ changed by hand.
 
 ```
 config.bu              The real machine config (the only file that matters on the NUC)
-project.json           Nx targets (ignition, iso, test, ssh-test, ssh, clean)
-Makefile               What each Nx target runs; everything runs inside the tools container
+project.json           Nx targets (ignition, iso, flash, test, ssh-test, ssh, clean)
+Makefile               What each Nx target runs; everything but flash runs inside the tools container
+flash-usb.sh           Writes the installer ISO to a USB stick picked by volume name (runs on the Mac)
 secrets.example/       Templates for secrets/ (gitignored)
 test/Dockerfile        Tools image: butane, coreos-installer, QEMU (used by every target, not just tests)
 test/run-vm.sh         Boots a throwaway QEMU VM from an Ignition file

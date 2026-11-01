@@ -13,4 +13,4 @@ storage:
       mode: 0644
       overwrite: true
       contents:
-        inline: tailscale-exit-test
+        inline: fieldwood-exit-node-test

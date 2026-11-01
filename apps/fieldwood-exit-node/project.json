@@ -11,6 +11,10 @@
       "command": "make iso",
       "options": { "cwd": "{projectRoot}" }
     },
+    "flash": {
+      "command": "make flash",
+      "options": { "cwd": "{projectRoot}", "tty": true }
+    },
     "test": {
       "command": "make test",
       "options": { "cwd": "{projectRoot}", "tty": true }

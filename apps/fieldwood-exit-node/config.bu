@@ -14,7 +14,7 @@ storage:
     - path: /etc/hostname
       mode: 0644
       contents:
-        inline: tailscale-exit
+        inline: fieldwood-exit-node
 
     # Exit nodes must forward traffic.
     - path: /etc/sysctl.d/90-tailscale.conf
