@@ -232,6 +232,7 @@ tailscale status                  # tailnet connection
 systemctl status docker-mealie    # Mealie container
 ls /mnt/unas                      # UNAS share (mounts on first access)
 systemctl status mnt-unas.mount   # why the share didn't mount, if it didn't
+systemctl list-timers postgresqlBackup  # next nightly Postgres backup to the UNAS
 ```
 
 ### 7. Finish setting up Mealie
@@ -270,6 +271,20 @@ Some of the setup lives in the tailnet, not in this config:
 
 Check what the node is serving with `sudo tailscale serve status`, and see
 whether the config applied with `systemctl status tailscale-serve`.
+
+## Postgres backups
+
+Every night at 03:00 New York time, NixOS's built-in `postgresqlBackup`
+dumps every database (and the roles) to `/var/backup/postgresql/all.sql.gz`,
+keeping the previous night's as `all.prev.sql.gz`. It then copies the new
+dump to `/mnt/unas/backups/gaming-pc-server/postgres/all.sql.gz`. If the PC
+was off then, it runs as soon as it's back. See
+[nix/services/postgres-backup.nix](nix/services/postgres-backup.nix).
+
+```sh
+sudo systemctl start postgresqlBackup   # back up now
+journalctl -u postgresqlBackup          # what the last runs did
+```
 
 ## Changing the config
 

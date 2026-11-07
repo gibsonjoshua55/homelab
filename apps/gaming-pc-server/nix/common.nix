@@ -9,6 +9,7 @@
     ./unas.nix
     ./services/mealie.nix
     ./services/postgres.nix
+    ./services/postgres-backup.nix
   ];
 
   networking.hostName = "gaming-pc-server";
