@@ -230,6 +230,8 @@ To check things from inside NixOS:
 ```sh
 tailscale status                  # tailnet connection
 systemctl status docker-mealie    # Mealie container
+ls /mnt/unas                      # UNAS share (mounts on first access)
+systemctl status mnt-unas.mount   # why the share didn't mount, if it didn't
 ```
 
 ### 7. Finish setting up Mealie
@@ -310,6 +312,7 @@ nix/common.nix         Shared config: goes on the PC and into the test VM
 nix/wsl.nix            WSL-only settings
 nix/test-vm.nix        Test-VM-only settings (user, SSH, QEMU options)
 nix/tailscale-serve.nix  Applies the Tailscale Services that service files declare
+nix/unas.nix           Mounts the UNAS's SMB share at /mnt/unas (credentials from sops)
 nix/services/          One file per hosted service (e.g. mealie.nix), imported from common.nix
 project.json           Nx targets
 Makefile               What the Mac targets run; Nix runs inside Docker

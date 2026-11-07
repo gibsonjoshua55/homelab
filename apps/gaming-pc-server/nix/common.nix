@@ -6,6 +6,7 @@
   imports = [
     ./secrets.nix
     ./tailscale-serve.nix
+    ./unas.nix
     ./services/mealie.nix
     ./services/postgres.nix
   ];
