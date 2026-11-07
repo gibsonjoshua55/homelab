@@ -33,6 +33,10 @@
       "command": "make deploy",
       "options": { "cwd": "{projectRoot}", "tty": true }
     },
+    "secrets": {
+      "command": "make secrets",
+      "options": { "cwd": "{projectRoot}", "tty": true }
+    },
     "update": {
       "command": "make update",
       "options": { "cwd": "{projectRoot}" }

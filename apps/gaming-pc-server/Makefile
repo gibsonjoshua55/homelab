@@ -9,8 +9,11 @@ DEPLOY_HOST ?= nixos@gaming-pc-server
 # Windows' own OpenSSH server on the PC, for copy-to-pc.
 WINDOWS_HOST ?= jcgla@josh-desktop
 SSH_OPTS := -p 2222 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR
+# Your personal age key (gitignored) and the file `secrets` opens.
+SOPS_AGE_KEY_FILE ?= $(CURDIR)/keys/keys.txt
+SECRETS_FILE      ?= secrets/secrets.yaml
 
-.PHONY: check build-wsl _build-wsl test ssh-test copy-to-pc deploy clean update
+.PHONY: check build-wsl _build-wsl test ssh-test copy-to-pc deploy clean update secrets
 
 ## Evaluate every config in the flake
 check:
@@ -51,6 +54,11 @@ deploy:
 clean:
 	rm -rf .cache
 	-docker volume rm gaming-pc-server-nix-aarch64 gaming-pc-server-nix-x86_64
+
+## Decrypt a secrets file into $EDITOR; it's re-encrypted on save.
+## Runs the Mac's sops (brew install sops), not Docker, so it opens your editor.
+secrets:
+	SOPS_AGE_KEY_FILE="$(SOPS_AGE_KEY_FILE)" sops $(SECRETS_FILE)
 
 ## Bump nixpkgs/NixOS-WSL in flake.lock
 update:

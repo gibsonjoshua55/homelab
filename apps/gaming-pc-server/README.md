@@ -19,6 +19,7 @@ Run these from the repo root. Each target is defined in
 | Mac        | Build the real WSL system          | `npx nx build-wsl gaming-pc-server` (x86_64 under emulation: slow)                      |
 | Mac        | Copy the folder to Windows (setup) | `npx nx copy-to-pc gaming-pc-server`                                                    |
 | Mac        | Apply the config to the PC         | `npx nx deploy gaming-pc-server`                                                        |
+| Mac        | Edit encrypted secrets (sops)      | `npx nx secrets gaming-pc-server`                                                       |
 | Mac        | Bump nixpkgs/NixOS-WSL             | `npx nx update gaming-pc-server`                                                        |
 | Mac        | Delete VM output and the Nix cache | `npx nx clean gaming-pc-server`                                                         |
 

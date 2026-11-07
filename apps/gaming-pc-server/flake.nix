@@ -7,10 +7,15 @@
       url = "github:nix-community/NixOS-WSL/main";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # Decrypts secrets/*.yaml on the machine at activation; see nix/secrets.nix.
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
-    { nixpkgs, nixos-wsl, ... }:
+    { nixpkgs, nixos-wsl, sops-nix, ... }:
     let
       # Local test VM: the shared config without WSL, booted with QEMU.
       mkTestVm =
@@ -18,6 +23,7 @@
         nixpkgs.lib.nixosSystem {
           inherit system;
           modules = [
+            sops-nix.nixosModules.sops
             ./nix/common.nix
             ./nix/test-vm.nix
           ];
@@ -29,6 +35,7 @@
           system = "x86_64-linux";
           modules = [
             nixos-wsl.nixosModules.default
+            sops-nix.nixosModules.sops
             ./nix/common.nix
             ./nix/wsl.nix
           ];

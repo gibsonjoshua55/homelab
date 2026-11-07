@@ -1,0 +1,9 @@
+keys:
+  - &josh age15p65gcm00g34ywxz43z82elnd6v8mehensppxz9v7n750s42fvgq4z78z9
+  - &gaming_pc_server age12hngyv424guq98jvkqlvpxh2kr04xpq3huxr29hzjkkklmz699esphhfw2
+creation_rules:
+  - path_regex: secrets/[^/]+\.yaml$
+    key_groups:
+      - age:
+          - *josh
+          - *gaming_pc_server
