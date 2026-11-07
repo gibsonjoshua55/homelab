@@ -10,6 +10,7 @@
     ./services/mealie.nix
     ./services/postgres.nix
     ./services/postgres-backup.nix
+    ./services/registry.nix
   ];
 
   networking.hostName = "gaming-pc-server";
