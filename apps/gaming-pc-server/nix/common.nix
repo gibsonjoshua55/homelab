@@ -6,6 +6,7 @@
   imports = [
     ./tailscale-serve.nix
     ./services/mealie.nix
+    ./services/postgres.nix
   ];
 
   networking.hostName = "gaming-pc-server";

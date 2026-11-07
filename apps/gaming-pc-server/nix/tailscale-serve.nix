@@ -1,8 +1,8 @@
 # Tailscale Services (https://tailscale.com/kb/1552/tailscale-services)
 # hosted by this machine. Service files add entries to
-# homelab.tailscaleServe.services; this module applies all of them with
-# `tailscale serve set-config --all`, so services removed here stop being
-# served too.
+# homelab.tailscaleServe.services; this module resets the node's serve
+# config and applies all of them, so services removed here stop being
+# served (and advertised) too.
 #
 # Not covered here, done once per tailnet: the node must carry a tag
 # (service hosts must be tagged), each service must exist in the admin
@@ -12,18 +12,28 @@
 
 let
   cfg = config.homelab.tailscaleServe;
+  tailscale = lib.getExe config.services.tailscale.package;
   # Format: https://tailscale.com/kb/1589/tailscale-services-configuration-file
+  # Endpoints are left empty: in this format the target's scheme sets both
+  # the frontend and the backend protocol, so it can't express HTTPS in front
+  # of a plain-HTTP backend. The file only sets which services are advertised;
+  # `tailscale serve --https` adds the endpoints below.
   serveConfig = pkgs.writeText "tailscale-serve.json" (builtins.toJSON {
     version = "0.0.1";
-    services = lib.mapAttrs' (name: endpoints: lib.nameValuePair "svc:${name}" { inherit endpoints; }) cfg.services;
+    services = lib.mapAttrs' (name: _: lib.nameValuePair "svc:${name}" { endpoints = { }; }) cfg.services;
   });
+  serveCommands = lib.concatLists (lib.mapAttrsToList (name: endpoints:
+    lib.mapAttrsToList (port: target:
+      "${tailscale} serve --service=svc:${name} --https=${port} --yes ${lib.escapeShellArg target}"
+    ) endpoints
+  ) cfg.services);
 in
 {
   options.homelab.tailscaleServe.services = lib.mkOption {
     type = lib.types.attrsOf (lib.types.attrsOf lib.types.str);
     default = { };
-    example = { mealie."tcp:443" = "http://localhost:9000"; };
-    description = "Endpoints per service, keyed by service name without the svc: prefix.";
+    example = { mealie."443" = "http://localhost:9000"; };
+    description = "HTTPS ports and their backend per service, keyed by service name without the svc: prefix.";
   };
 
   config = lib.mkIf config.services.tailscale.enable {
@@ -43,7 +53,14 @@ in
         RestartSec = 10;
       };
       # The store path changes with the config, so a rebuild reruns this.
-      script = "${lib.getExe config.services.tailscale.package} serve set-config --all ${serveConfig}";
+      # set-config validates against the stored state instead of replacing
+      # it, so reapplying even an identical config fails ("port 443 is
+      # already serving https"). Reset first; --all owns everything anyway.
+      script = ''
+        ${tailscale} serve reset
+        ${tailscale} serve set-config --all ${serveConfig}
+        ${lib.concatStringsSep "\n" serveCommands}
+      '';
     };
   };
 }
