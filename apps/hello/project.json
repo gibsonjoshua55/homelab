@@ -1,0 +1,23 @@
+{
+  "name": "hello",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "targets": {
+    "version": {
+      "command": "make -s version",
+      "options": { "cwd": "{projectRoot}" }
+    },
+    "build": {
+      "command": "make build",
+      "options": { "cwd": "{projectRoot}" }
+    },
+    "serve": {
+      "command": "make serve",
+      "options": { "cwd": "{projectRoot}", "tty": true }
+    },
+    "push": {
+      "command": "make push",
+      "options": { "cwd": "{projectRoot}" }
+    }
+  }
+}
