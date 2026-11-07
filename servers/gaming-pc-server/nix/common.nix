@@ -11,6 +11,7 @@
     ./services/postgres.nix
     ./services/postgres-backup.nix
     ./services/registry.nix
+    ./services/hello.nix
   ];
 
   networking.hostName = "gaming-pc-server";
