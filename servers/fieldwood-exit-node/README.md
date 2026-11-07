@@ -13,7 +13,7 @@ coreos-installer and QEMU all run in a tools container built from
 
 Every command in this README runs from the **monorepo root**. File paths
 in the text (`config.bu`, `secrets/`, `build/`, …) are relative to
-`apps/fieldwood-exit-node/`. Each target is defined in
+`servers/fieldwood-exit-node/`. Each target is defined in
 [`project.json`](project.json) and delegates to the `Makefile` in this
 directory.
 
@@ -74,8 +74,8 @@ edits to `config.bu` do nothing to a machine that's already running. See
 ## First-time setup
 
 ```sh
-mkdir -p apps/fieldwood-exit-node/secrets
-cp apps/fieldwood-exit-node/secrets.example/* apps/fieldwood-exit-node/secrets/
+mkdir -p servers/fieldwood-exit-node/secrets
+cp servers/fieldwood-exit-node/secrets.example/* servers/fieldwood-exit-node/secrets/
 ```
 
 Then edit the two files:
