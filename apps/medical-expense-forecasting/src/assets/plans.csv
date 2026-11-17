@@ -1,0 +1,7 @@
+plan_id,plan_name,sbc_plan_code,network,network_label,deductible_individual,deductible_family,oop_max_individual,oop_max_family
+base_4000,Base Plan – Angle Nomi Traditional 4000,ANG NOMI TRAD 4000 6000,tier1,Tier 1 In-Network (SBC: Preferred Network),0,0,6000,12000
+base_4000,Base Plan – Angle Nomi Traditional 4000,ANG NOMI TRAD 4000 6000,tier2,Tier 2 In-Network (SBC: In-Network),4000,8000,6000,12000
+base_4000,Base Plan – Angle Nomi Traditional 4000,ANG NOMI TRAD 4000 6000,oon,Out-of-Network,8000,16000,12000,24000
+opt_up_1000,Opt Up Plan – Angle Nomi Traditional 1000,ANG NOMI TRAD 1000 2000,tier1,Tier 1 In-Network (SBC: Preferred Network),0,0,2000,4000
+opt_up_1000,Opt Up Plan – Angle Nomi Traditional 1000,ANG NOMI TRAD 1000 2000,tier2,Tier 2 In-Network (SBC: In-Network),1000,2000,2000,4000
+opt_up_1000,Opt Up Plan – Angle Nomi Traditional 1000,ANG NOMI TRAD 1000 2000,oon,Out-of-Network,5000,10000,10000,20000

@@ -1,0 +1,403 @@
+plan_id,service_id,category,service,network,cost_share,copay_usd,coinsurance_pct,deductible_applies,limit_per_year,limit_unit,limit_scope,precert,notes
+base_4000,primary_care_visit,Professional services,Primary care office visit,tier1,no_charge,,,false,,,,,
+base_4000,primary_care_visit,Professional services,Primary care office visit,tier2,copay,25,,false,,,,,
+base_4000,primary_care_visit,Professional services,Primary care office visit,oon,coinsurance,,50,true,,,,,
+base_4000,specialist_visit,Professional services,Specialist office visit,tier1,no_charge,,,false,,,,,
+base_4000,specialist_visit,Professional services,Specialist office visit,tier2,copay,75,,false,,,,,
+base_4000,specialist_visit,Professional services,Specialist office visit,oon,coinsurance,,50,true,,,,,
+base_4000,virtual_primary_care,Professional services,Virtual care visit – primary care,tier1,no_charge,,,false,,,,,
+base_4000,virtual_primary_care,Professional services,Virtual care visit – primary care,tier2,copay,25,,false,,,,,
+base_4000,virtual_primary_care,Professional services,Virtual care visit – primary care,oon,coinsurance,,50,true,,,,,
+base_4000,virtual_specialist,Professional services,Virtual care visit – specialist,tier1,no_charge,,,false,,,,,
+base_4000,virtual_specialist,Professional services,Virtual care visit – specialist,tier2,copay,75,,false,,,,,
+base_4000,virtual_specialist,Professional services,Virtual care visit – specialist,oon,coinsurance,,50,true,,,,,
+base_4000,virtual_doctor_on_demand,Professional services,Virtual care visit – Doctor on Demand,tier1,no_charge,,,false,,,,,
+base_4000,virtual_doctor_on_demand,Professional services,Virtual care visit – Doctor on Demand,tier2,no_charge,,,false,,,,,
+base_4000,virtual_doctor_on_demand,Professional services,Virtual care visit – Doctor on Demand,oon,not_covered,,,,,,,,
+base_4000,preventive_care,Professional services,Preventive care / screening / immunization,tier1,no_charge,,,false,,,,,Non-preventive services provided during a preventive visit may have cost-sharing.
+base_4000,preventive_care,Professional services,Preventive care / screening / immunization,tier2,no_charge,,,false,,,,,Non-preventive services provided during a preventive visit may have cost-sharing.
+base_4000,preventive_care,Professional services,Preventive care / screening / immunization,oon,not_covered,,,,,,,,Non-preventive services provided during a preventive visit may have cost-sharing.
+base_4000,allergy_services,Professional services,"Allergy services (injections, serum, testing)",tier1,no_charge,,,false,,,,,
+base_4000,allergy_services,Professional services,"Allergy services (injections, serum, testing)",tier2,coinsurance,,20,true,,,,,
+base_4000,allergy_services,Professional services,"Allergy services (injections, serum, testing)",oon,coinsurance,,50,true,,,,,
+base_4000,lab,Professional services,Laboratory services,tier1,no_charge,,,false,,,,,
+base_4000,lab,Professional services,Laboratory services,tier2,copay,25,,false,,,,,
+base_4000,lab,Professional services,Laboratory services,oon,coinsurance,,50,true,,,,,
+base_4000,xray_diagnostic_imaging,Professional services,X-rays and diagnostic imaging,tier1,no_charge,,,false,,,,,
+base_4000,xray_diagnostic_imaging,Professional services,X-rays and diagnostic imaging,tier2,coinsurance,,20,true,,,,,
+base_4000,xray_diagnostic_imaging,Professional services,X-rays and diagnostic imaging,oon,coinsurance,,50,true,,,,,
+base_4000,advanced_imaging,Professional services,"Advanced imaging (MRI, CT, PET)",tier1,no_charge,,,false,,,,certain_services,
+base_4000,advanced_imaging,Professional services,"Advanced imaging (MRI, CT, PET)",tier2,coinsurance,,20,true,,,,certain_services,
+base_4000,advanced_imaging,Professional services,"Advanced imaging (MRI, CT, PET)",oon,coinsurance,,50,true,,,,certain_services,
+base_4000,er_facility,Emergency & urgent care,Emergency room facility fee,tier1,copay,500,,false,,,,,
+base_4000,er_facility,Emergency & urgent care,Emergency room facility fee,tier2,copay,500,,false,,,,,
+base_4000,er_facility,Emergency & urgent care,Emergency room facility fee,oon,copay,500,,false,,,,,
+base_4000,er_physician,Emergency & urgent care,Emergency room physician fee,tier1,coinsurance,,20,false,,,,,
+base_4000,er_physician,Emergency & urgent care,Emergency room physician fee,tier2,coinsurance,,20,true,,,,,
+base_4000,er_physician,Emergency & urgent care,Emergency room physician fee,oon,coinsurance,,20,true,,,,,
+base_4000,urgent_care,Emergency & urgent care,Urgent care center,tier1,copay,85,,false,,,,,
+base_4000,urgent_care,Emergency & urgent care,Urgent care center,tier2,copay,85,,false,,,,,
+base_4000,urgent_care,Emergency & urgent care,Urgent care center,oon,coinsurance,,50,true,,,,,
+base_4000,ambulance,Emergency & urgent care,Ambulance / emergency transport (air and ground),tier1,coinsurance,,20,false,,,,certain_services,
+base_4000,ambulance,Emergency & urgent care,Ambulance / emergency transport (air and ground),tier2,coinsurance,,20,true,,,,certain_services,
+base_4000,ambulance,Emergency & urgent care,Ambulance / emergency transport (air and ground),oon,coinsurance,,20,true,,,,certain_services,
+base_4000,outpatient_surgery_facility,Outpatient services,Outpatient hospital surgery facility,tier1,no_charge,,,false,,,,certain_services,
+base_4000,outpatient_surgery_facility,Outpatient services,Outpatient hospital surgery facility,tier2,coinsurance,,20,true,,,,certain_services,
+base_4000,outpatient_surgery_facility,Outpatient services,Outpatient hospital surgery facility,oon,coinsurance,,50,true,,,,certain_services,
+base_4000,outpatient_surgeon,Outpatient services,Outpatient physician/surgeon,tier1,no_charge,,,false,,,,,
+base_4000,outpatient_surgeon,Outpatient services,Outpatient physician/surgeon,tier2,coinsurance,,20,true,,,,,
+base_4000,outpatient_surgeon,Outpatient services,Outpatient physician/surgeon,oon,coinsurance,,50,true,,,,,
+base_4000,outpatient_rehab,Outpatient services,"Outpatient rehabilitation (PT, OT, speech)",tier1,no_charge,,,false,20,visits,"each of PT, OT, speech",certain_services,
+base_4000,outpatient_rehab,Outpatient services,"Outpatient rehabilitation (PT, OT, speech)",tier2,copay,75,,false,20,visits,"each of PT, OT, speech",certain_services,
+base_4000,outpatient_rehab,Outpatient services,"Outpatient rehabilitation (PT, OT, speech)",oon,coinsurance,,50,true,20,visits,"each of PT, OT, speech",certain_services,
+base_4000,outpatient_habilitation,Outpatient services,"Outpatient habilitation (PT, OT, speech)",tier1,no_charge,,,false,20,visits,"each of PT, OT, speech",certain_services,
+base_4000,outpatient_habilitation,Outpatient services,"Outpatient habilitation (PT, OT, speech)",tier2,copay,75,,false,20,visits,"each of PT, OT, speech",certain_services,
+base_4000,outpatient_habilitation,Outpatient services,"Outpatient habilitation (PT, OT, speech)",oon,coinsurance,,50,true,20,visits,"each of PT, OT, speech",certain_services,
+base_4000,outpatient_anesthesia,Outpatient services,Outpatient anesthesia,tier1,no_charge,,,false,,,,,
+base_4000,outpatient_anesthesia,Outpatient services,Outpatient anesthesia,tier2,coinsurance,,20,true,,,,,
+base_4000,outpatient_anesthesia,Outpatient services,Outpatient anesthesia,oon,coinsurance,,50,true,,,,,
+base_4000,outpatient_hospice,Outpatient services,Outpatient hospice,tier1,no_charge,,,false,,,,,
+base_4000,outpatient_hospice,Outpatient services,Outpatient hospice,tier2,coinsurance,,20,true,,,,,
+base_4000,outpatient_hospice,Outpatient services,Outpatient hospice,oon,coinsurance,,50,true,,,,,
+base_4000,inpatient_facility,Inpatient services,Inpatient hospital facility,tier1,no_charge,,,false,,,,required,
+base_4000,inpatient_facility,Inpatient services,Inpatient hospital facility,tier2,coinsurance,,20,true,,,,required,
+base_4000,inpatient_facility,Inpatient services,Inpatient hospital facility,oon,coinsurance,,50,true,,,,required,
+base_4000,inpatient_surgeon,Inpatient services,Inpatient physician/surgeon,tier1,no_charge,,,false,,,,,
+base_4000,inpatient_surgeon,Inpatient services,Inpatient physician/surgeon,tier2,coinsurance,,20,true,,,,,
+base_4000,inpatient_surgeon,Inpatient services,Inpatient physician/surgeon,oon,coinsurance,,50,true,,,,,
+base_4000,skilled_nursing,Inpatient services,Skilled nursing facility,tier1,no_charge,,,false,60,days,,required,
+base_4000,skilled_nursing,Inpatient services,Skilled nursing facility,tier2,coinsurance,,20,true,60,days,,required,
+base_4000,skilled_nursing,Inpatient services,Skilled nursing facility,oon,coinsurance,,50,true,60,days,,required,
+base_4000,inpatient_rehab,Inpatient services,"Inpatient rehabilitation (PT, OT, speech)",tier1,no_charge,,,false,,,,certain_services,
+base_4000,inpatient_rehab,Inpatient services,"Inpatient rehabilitation (PT, OT, speech)",tier2,coinsurance,,20,true,,,,certain_services,
+base_4000,inpatient_rehab,Inpatient services,"Inpatient rehabilitation (PT, OT, speech)",oon,coinsurance,,50,true,,,,certain_services,
+base_4000,inpatient_anesthesia,Inpatient services,Inpatient anesthesia,tier1,no_charge,,,false,,,,,
+base_4000,inpatient_anesthesia,Inpatient services,Inpatient anesthesia,tier2,coinsurance,,20,true,,,,,
+base_4000,inpatient_anesthesia,Inpatient services,Inpatient anesthesia,oon,coinsurance,,50,true,,,,,
+base_4000,inpatient_hospice,Inpatient services,Inpatient hospice,tier1,no_charge,,,false,,,,certain_services,
+base_4000,inpatient_hospice,Inpatient services,Inpatient hospice,tier2,coinsurance,,20,true,,,,certain_services,
+base_4000,inpatient_hospice,Inpatient services,Inpatient hospice,oon,coinsurance,,50,true,,,,certain_services,
+base_4000,prenatal_postnatal,Maternity & newborn care,Prenatal & postnatal care,tier1,no_charge,,,false,,,,,Routine ACOG prenatal visit sequence. Some preventive prenatal services have no cost-sharing (SBC).
+base_4000,prenatal_postnatal,Maternity & newborn care,Prenatal & postnatal care,tier2,coinsurance,,20,true,,,,,Routine ACOG prenatal visit sequence. Some preventive prenatal services have no cost-sharing (SBC).
+base_4000,prenatal_postnatal,Maternity & newborn care,Prenatal & postnatal care,oon,coinsurance,,50,true,,,,,Routine ACOG prenatal visit sequence. Some preventive prenatal services have no cost-sharing (SBC).
+base_4000,birth_facility,Maternity & newborn care,Inpatient hospital & birthing center facility,tier1,no_charge,,,false,,,,,Preauthorization needed if stay exceeds 48h (vaginal) or 96h (cesarean).
+base_4000,birth_facility,Maternity & newborn care,Inpatient hospital & birthing center facility,tier2,coinsurance,,20,true,,,,,Preauthorization needed if stay exceeds 48h (vaginal) or 96h (cesarean).
+base_4000,birth_facility,Maternity & newborn care,Inpatient hospital & birthing center facility,oon,coinsurance,,50,true,,,,,Preauthorization needed if stay exceeds 48h (vaginal) or 96h (cesarean).
+base_4000,newborn_care,Maternity & newborn care,Newborn care,tier1,no_charge,,,false,,,,,
+base_4000,newborn_care,Maternity & newborn care,Newborn care,tier2,coinsurance,,20,true,,,,,
+base_4000,newborn_care,Maternity & newborn care,Newborn care,oon,coinsurance,,50,true,,,,,
+base_4000,acupuncture,"Additional services, equipment & devices",Acupuncture,tier1,no_charge,,,false,20,visits,,,
+base_4000,acupuncture,"Additional services, equipment & devices",Acupuncture,tier2,copay,75,,false,20,visits,,,
+base_4000,acupuncture,"Additional services, equipment & devices",Acupuncture,oon,coinsurance,,50,true,20,visits,,,
+base_4000,blood_administration,"Additional services, equipment & devices",Blood and administration,tier1,no_charge,,,false,,,,,
+base_4000,blood_administration,"Additional services, equipment & devices",Blood and administration,tier2,coinsurance,,20,true,,,,,
+base_4000,blood_administration,"Additional services, equipment & devices",Blood and administration,oon,coinsurance,,50,true,,,,,
+base_4000,chemotherapy,"Additional services, equipment & devices",Chemotherapy,tier1,no_charge,,,false,,,,required,
+base_4000,chemotherapy,"Additional services, equipment & devices",Chemotherapy,tier2,coinsurance,,20,true,,,,required,
+base_4000,chemotherapy,"Additional services, equipment & devices",Chemotherapy,oon,coinsurance,,50,true,,,,required,
+base_4000,chiropractic,"Additional services, equipment & devices",Chiropractic care,tier1,no_charge,,,false,20,visits,,,
+base_4000,chiropractic,"Additional services, equipment & devices",Chiropractic care,tier2,copay,75,,false,20,visits,,,
+base_4000,chiropractic,"Additional services, equipment & devices",Chiropractic care,oon,coinsurance,,50,true,20,visits,,,
+base_4000,cochlear_implants,"Additional services, equipment & devices",Cochlear implants,tier1,no_charge,,,false,,,,required,
+base_4000,cochlear_implants,"Additional services, equipment & devices",Cochlear implants,tier2,coinsurance,,20,true,,,,required,
+base_4000,cochlear_implants,"Additional services, equipment & devices",Cochlear implants,oon,coinsurance,,50,true,,,,required,
+base_4000,diabetic_equipment,"Additional services, equipment & devices",Diabetic equipment,tier1,no_charge,,,false,,,,certain_services,
+base_4000,diabetic_equipment,"Additional services, equipment & devices",Diabetic equipment,tier2,coinsurance,,20,true,,,,certain_services,
+base_4000,diabetic_equipment,"Additional services, equipment & devices",Diabetic equipment,oon,coinsurance,,50,true,,,,certain_services,
+base_4000,diabetic_supplies,"Additional services, equipment & devices",Diabetic supplies,tier1,no_charge,,,false,,,,certain_services,
+base_4000,diabetic_supplies,"Additional services, equipment & devices",Diabetic supplies,tier2,coinsurance,,20,true,,,,certain_services,
+base_4000,diabetic_supplies,"Additional services, equipment & devices",Diabetic supplies,oon,coinsurance,,50,true,,,,certain_services,
+base_4000,dme_prosthetics_orthotics,"Additional services, equipment & devices","Durable medical equipment, prosthetics & orthotics",tier1,no_charge,,,false,,,,certain_services,
+base_4000,dme_prosthetics_orthotics,"Additional services, equipment & devices","Durable medical equipment, prosthetics & orthotics",tier2,coinsurance,,20,true,,,,certain_services,
+base_4000,dme_prosthetics_orthotics,"Additional services, equipment & devices","Durable medical equipment, prosthetics & orthotics",oon,coinsurance,,50,true,,,,certain_services,
+base_4000,hearing_aids,"Additional services, equipment & devices",Hearing aids,tier1,not_covered,,,,,,,,
+base_4000,hearing_aids,"Additional services, equipment & devices",Hearing aids,tier2,not_covered,,,,,,,,
+base_4000,hearing_aids,"Additional services, equipment & devices",Hearing aids,oon,not_covered,,,,,,,,
+base_4000,home_health,"Additional services, equipment & devices",Home health care,tier1,no_charge,,,false,100,visits,,required,"SBC says ""100 days"" and preauth ""for certain services""; Schedule of Benefits says 100 visits, preauth required."
+base_4000,home_health,"Additional services, equipment & devices",Home health care,tier2,coinsurance,,20,true,100,visits,,required,"SBC says ""100 days"" and preauth ""for certain services""; Schedule of Benefits says 100 visits, preauth required."
+base_4000,home_health,"Additional services, equipment & devices",Home health care,oon,coinsurance,,50,true,100,visits,,required,"SBC says ""100 days"" and preauth ""for certain services""; Schedule of Benefits says 100 visits, preauth required."
+base_4000,infertility,"Additional services, equipment & devices",Infertility services,tier1,not_covered,,,,,,,,
+base_4000,infertility,"Additional services, equipment & devices",Infertility services,tier2,not_covered,,,,,,,,
+base_4000,infertility,"Additional services, equipment & devices",Infertility services,oon,not_covered,,,,,,,,
+base_4000,iv_therapy,"Additional services, equipment & devices",Intravenous therapy,tier1,no_charge,,,false,,,,required,
+base_4000,iv_therapy,"Additional services, equipment & devices",Intravenous therapy,tier2,coinsurance,,20,true,,,,required,
+base_4000,iv_therapy,"Additional services, equipment & devices",Intravenous therapy,oon,coinsurance,,50,true,,,,required,
+base_4000,misc_medical_supplies,"Additional services, equipment & devices",Miscellaneous medical supplies,tier1,no_charge,,,false,,,,,
+base_4000,misc_medical_supplies,"Additional services, equipment & devices",Miscellaneous medical supplies,tier2,coinsurance,,20,true,,,,,
+base_4000,misc_medical_supplies,"Additional services, equipment & devices",Miscellaneous medical supplies,oon,coinsurance,,50,true,,,,,
+base_4000,nutritional_counseling,"Additional services, equipment & devices",Nutritional counseling,tier1,no_charge,,,false,,,,,
+base_4000,nutritional_counseling,"Additional services, equipment & devices",Nutritional counseling,tier2,coinsurance,,20,true,,,,,
+base_4000,nutritional_counseling,"Additional services, equipment & devices",Nutritional counseling,oon,coinsurance,,50,true,,,,,
+base_4000,pre_admission_testing,"Additional services, equipment & devices",Pre-admission testing,tier1,no_charge,,,false,,,,,
+base_4000,pre_admission_testing,"Additional services, equipment & devices",Pre-admission testing,tier2,coinsurance,,20,true,,,,,
+base_4000,pre_admission_testing,"Additional services, equipment & devices",Pre-admission testing,oon,coinsurance,,50,true,,,,,
+base_4000,pulmonary_respiratory_therapy,"Additional services, equipment & devices",Pulmonary and respiratory therapy,tier1,no_charge,,,false,,,,,
+base_4000,pulmonary_respiratory_therapy,"Additional services, equipment & devices",Pulmonary and respiratory therapy,tier2,coinsurance,,20,true,,,,,
+base_4000,pulmonary_respiratory_therapy,"Additional services, equipment & devices",Pulmonary and respiratory therapy,oon,coinsurance,,50,true,,,,,
+base_4000,radiation_therapy,"Additional services, equipment & devices",Radiation therapy,tier1,no_charge,,,false,,,,,
+base_4000,radiation_therapy,"Additional services, equipment & devices",Radiation therapy,tier2,coinsurance,,20,true,,,,,
+base_4000,radiation_therapy,"Additional services, equipment & devices",Radiation therapy,oon,coinsurance,,50,true,,,,,
+base_4000,sleep_study,"Additional services, equipment & devices",Sleep study,tier1,no_charge,,,false,,,,,
+base_4000,sleep_study,"Additional services, equipment & devices",Sleep study,tier2,coinsurance,,20,true,,,,,
+base_4000,sleep_study,"Additional services, equipment & devices",Sleep study,oon,coinsurance,,50,true,,,,,
+base_4000,tmj,"Additional services, equipment & devices",Temporomandibular joint (TMJ) services,tier1,not_covered,,,,,,,,
+base_4000,tmj,"Additional services, equipment & devices",Temporomandibular joint (TMJ) services,tier2,not_covered,,,,,,,,
+base_4000,tmj,"Additional services, equipment & devices",Temporomandibular joint (TMJ) services,oon,not_covered,,,,,,,,
+base_4000,transplant,"Additional services, equipment & devices",Transplant,tier1,no_charge,,,false,,,,required,
+base_4000,transplant,"Additional services, equipment & devices",Transplant,tier2,coinsurance,,20,true,,,,required,
+base_4000,transplant,"Additional services, equipment & devices",Transplant,oon,coinsurance,,50,true,,,,required,
+base_4000,all_other_covered,"Additional services, equipment & devices",All other covered services,tier1,varies,,,,,,,,"Based on place of service and subject to applicable copay, coinsurance and/or deductible."
+base_4000,all_other_covered,"Additional services, equipment & devices",All other covered services,tier2,varies,,,,,,,,"Based on place of service and subject to applicable copay, coinsurance and/or deductible."
+base_4000,all_other_covered,"Additional services, equipment & devices",All other covered services,oon,varies,,,,,,,,"Based on place of service and subject to applicable copay, coinsurance and/or deductible."
+base_4000,mh_office_visit,"Mental health, chemical dependency & substance abuse",Office visit (outpatient),tier1,no_charge,,,false,,,,,
+base_4000,mh_office_visit,"Mental health, chemical dependency & substance abuse",Office visit (outpatient),tier2,copay,25,,false,,,,,
+base_4000,mh_office_visit,"Mental health, chemical dependency & substance abuse",Office visit (outpatient),oon,coinsurance,,50,true,,,,,
+base_4000,mh_virtual_visit,"Mental health, chemical dependency & substance abuse",Virtual care visit – MH/CD/SA provider,tier1,no_charge,,,false,,,,,
+base_4000,mh_virtual_visit,"Mental health, chemical dependency & substance abuse",Virtual care visit – MH/CD/SA provider,tier2,copay,25,,false,,,,,
+base_4000,mh_virtual_visit,"Mental health, chemical dependency & substance abuse",Virtual care visit – MH/CD/SA provider,oon,coinsurance,,50,true,,,,,
+base_4000,mh_virtual_doctor_on_demand,"Mental health, chemical dependency & substance abuse",Virtual care visit – Doctor on Demand,tier1,no_charge,,,false,,,,,
+base_4000,mh_virtual_doctor_on_demand,"Mental health, chemical dependency & substance abuse",Virtual care visit – Doctor on Demand,tier2,no_charge,,,false,,,,,
+base_4000,mh_virtual_doctor_on_demand,"Mental health, chemical dependency & substance abuse",Virtual care visit – Doctor on Demand,oon,not_covered,,,,,,,,
+base_4000,mh_inpatient,"Mental health, chemical dependency & substance abuse",Inpatient care,tier1,no_charge,,,false,,,,required_except_emergency,
+base_4000,mh_inpatient,"Mental health, chemical dependency & substance abuse",Inpatient care,tier2,coinsurance,,20,true,,,,required_except_emergency,
+base_4000,mh_inpatient,"Mental health, chemical dependency & substance abuse",Inpatient care,oon,coinsurance,,50,true,,,,required_except_emergency,
+base_4000,mh_intensive_outpatient,"Mental health, chemical dependency & substance abuse",Intensive outpatient treatment,tier1,no_charge,,,false,,,,,
+base_4000,mh_intensive_outpatient,"Mental health, chemical dependency & substance abuse",Intensive outpatient treatment,tier2,coinsurance,,20,true,,,,,
+base_4000,mh_intensive_outpatient,"Mental health, chemical dependency & substance abuse",Intensive outpatient treatment,oon,coinsurance,,50,true,,,,,
+base_4000,mh_residential,"Mental health, chemical dependency & substance abuse",Residential treatment center,tier1,no_charge,,,false,,,,required_except_emergency,
+base_4000,mh_residential,"Mental health, chemical dependency & substance abuse",Residential treatment center,tier2,coinsurance,,20,true,,,,required_except_emergency,
+base_4000,mh_residential,"Mental health, chemical dependency & substance abuse",Residential treatment center,oon,coinsurance,,50,true,,,,required_except_emergency,
+base_4000,rx_retail_generic,Prescription drugs,Retail 31-day supply – Generic (drug tier 1),tier1,copay,20,,false,,,,certain_services,Pharmacy benefit has a single in-network column; tier1 and tier2 are identical.
+base_4000,rx_retail_generic,Prescription drugs,Retail 31-day supply – Generic (drug tier 1),tier2,copay,20,,false,,,,certain_services,Pharmacy benefit has a single in-network column; tier1 and tier2 are identical.
+base_4000,rx_retail_generic,Prescription drugs,Retail 31-day supply – Generic (drug tier 1),oon,not_covered,,,,,,,certain_services,Pharmacy benefit has a single in-network column; tier1 and tier2 are identical.
+base_4000,rx_retail_preferred_brand,Prescription drugs,Retail 31-day supply – Preferred brand (drug tier 2),tier1,copay,60,,false,,,,certain_services,Pharmacy benefit has a single in-network column; tier1 and tier2 are identical.
+base_4000,rx_retail_preferred_brand,Prescription drugs,Retail 31-day supply – Preferred brand (drug tier 2),tier2,copay,60,,false,,,,certain_services,Pharmacy benefit has a single in-network column; tier1 and tier2 are identical.
+base_4000,rx_retail_preferred_brand,Prescription drugs,Retail 31-day supply – Preferred brand (drug tier 2),oon,not_covered,,,,,,,certain_services,Pharmacy benefit has a single in-network column; tier1 and tier2 are identical.
+base_4000,rx_retail_non_preferred_brand,Prescription drugs,Retail 31-day supply – Non-preferred brand (drug tier 3),tier1,copay,85,,false,,,,certain_services,Pharmacy benefit has a single in-network column; tier1 and tier2 are identical.
+base_4000,rx_retail_non_preferred_brand,Prescription drugs,Retail 31-day supply – Non-preferred brand (drug tier 3),tier2,copay,85,,false,,,,certain_services,Pharmacy benefit has a single in-network column; tier1 and tier2 are identical.
+base_4000,rx_retail_non_preferred_brand,Prescription drugs,Retail 31-day supply – Non-preferred brand (drug tier 3),oon,not_covered,,,,,,,certain_services,Pharmacy benefit has a single in-network column; tier1 and tier2 are identical.
+base_4000,rx_retail_specialty,Prescription drugs,Retail 31-day supply – Specialty (drug tier 4),tier1,coinsurance,,20,true,,,,certain_services,20% after the Tier 2 (in-network) deductible. Pharmacy benefit has a single in-network column; tier1 and tier2 are identical.
+base_4000,rx_retail_specialty,Prescription drugs,Retail 31-day supply – Specialty (drug tier 4),tier2,coinsurance,,20,true,,,,certain_services,20% after the Tier 2 (in-network) deductible. Pharmacy benefit has a single in-network column; tier1 and tier2 are identical.
+base_4000,rx_retail_specialty,Prescription drugs,Retail 31-day supply – Specialty (drug tier 4),oon,not_covered,,,,,,,certain_services,20% after the Tier 2 (in-network) deductible. Pharmacy benefit has a single in-network column; tier1 and tier2 are identical.
+base_4000,rx_mail_generic,Prescription drugs,Mail order 90-day supply – Generic (drug tier 1),tier1,copay,50,,false,,,,certain_services,Pharmacy benefit has a single in-network column; tier1 and tier2 are identical.
+base_4000,rx_mail_generic,Prescription drugs,Mail order 90-day supply – Generic (drug tier 1),tier2,copay,50,,false,,,,certain_services,Pharmacy benefit has a single in-network column; tier1 and tier2 are identical.
+base_4000,rx_mail_generic,Prescription drugs,Mail order 90-day supply – Generic (drug tier 1),oon,not_covered,,,,,,,certain_services,Pharmacy benefit has a single in-network column; tier1 and tier2 are identical.
+base_4000,rx_mail_preferred_brand,Prescription drugs,Mail order 90-day supply – Preferred brand (drug tier 2),tier1,copay,150,,false,,,,certain_services,Pharmacy benefit has a single in-network column; tier1 and tier2 are identical.
+base_4000,rx_mail_preferred_brand,Prescription drugs,Mail order 90-day supply – Preferred brand (drug tier 2),tier2,copay,150,,false,,,,certain_services,Pharmacy benefit has a single in-network column; tier1 and tier2 are identical.
+base_4000,rx_mail_preferred_brand,Prescription drugs,Mail order 90-day supply – Preferred brand (drug tier 2),oon,not_covered,,,,,,,certain_services,Pharmacy benefit has a single in-network column; tier1 and tier2 are identical.
+base_4000,rx_mail_non_preferred_brand,Prescription drugs,Mail order 90-day supply – Non-preferred brand (drug tier 3),tier1,copay,212.5,,false,,,,certain_services,Pharmacy benefit has a single in-network column; tier1 and tier2 are identical.
+base_4000,rx_mail_non_preferred_brand,Prescription drugs,Mail order 90-day supply – Non-preferred brand (drug tier 3),tier2,copay,212.5,,false,,,,certain_services,Pharmacy benefit has a single in-network column; tier1 and tier2 are identical.
+base_4000,rx_mail_non_preferred_brand,Prescription drugs,Mail order 90-day supply – Non-preferred brand (drug tier 3),oon,not_covered,,,,,,,certain_services,Pharmacy benefit has a single in-network column; tier1 and tier2 are identical.
+base_4000,rx_mail_specialty,Prescription drugs,Mail order 90-day supply – Specialty (drug tier 4),tier1,not_covered,,,,,,,certain_services,Specialty drugs are only available as a 31-day retail supply.
+base_4000,rx_mail_specialty,Prescription drugs,Mail order 90-day supply – Specialty (drug tier 4),tier2,not_covered,,,,,,,certain_services,Specialty drugs are only available as a 31-day retail supply.
+base_4000,rx_mail_specialty,Prescription drugs,Mail order 90-day supply – Specialty (drug tier 4),oon,not_covered,,,,,,,certain_services,Specialty drugs are only available as a 31-day retail supply.
+base_4000,dental,Dental & vision (adult & child),Dental services,tier1,not_covered,,,,,,,,
+base_4000,dental,Dental & vision (adult & child),Dental services,tier2,not_covered,,,,,,,,
+base_4000,dental,Dental & vision (adult & child),Dental services,oon,not_covered,,,,,,,,
+base_4000,vision_exam,Dental & vision (adult & child),Vision exams,tier1,not_covered,,,,,,,,
+base_4000,vision_exam,Dental & vision (adult & child),Vision exams,tier2,not_covered,,,,,,,,
+base_4000,vision_exam,Dental & vision (adult & child),Vision exams,oon,not_covered,,,,,,,,
+base_4000,eyewear,Dental & vision (adult & child),"Lenses, frames and contact lenses",tier1,not_covered,,,,,,,,
+base_4000,eyewear,Dental & vision (adult & child),"Lenses, frames and contact lenses",tier2,not_covered,,,,,,,,
+base_4000,eyewear,Dental & vision (adult & child),"Lenses, frames and contact lenses",oon,not_covered,,,,,,,,
+opt_up_1000,primary_care_visit,Professional services,Primary care office visit,tier1,no_charge,,,false,,,,,
+opt_up_1000,primary_care_visit,Professional services,Primary care office visit,tier2,copay,10,,false,,,,,
+opt_up_1000,primary_care_visit,Professional services,Primary care office visit,oon,coinsurance,,50,true,,,,,
+opt_up_1000,specialist_visit,Professional services,Specialist office visit,tier1,no_charge,,,false,,,,,
+opt_up_1000,specialist_visit,Professional services,Specialist office visit,tier2,copay,30,,false,,,,,
+opt_up_1000,specialist_visit,Professional services,Specialist office visit,oon,coinsurance,,50,true,,,,,
+opt_up_1000,virtual_primary_care,Professional services,Virtual care visit – primary care,tier1,no_charge,,,false,,,,,
+opt_up_1000,virtual_primary_care,Professional services,Virtual care visit – primary care,tier2,copay,10,,false,,,,,
+opt_up_1000,virtual_primary_care,Professional services,Virtual care visit – primary care,oon,coinsurance,,50,true,,,,,
+opt_up_1000,virtual_specialist,Professional services,Virtual care visit – specialist,tier1,no_charge,,,false,,,,,
+opt_up_1000,virtual_specialist,Professional services,Virtual care visit – specialist,tier2,copay,30,,false,,,,,
+opt_up_1000,virtual_specialist,Professional services,Virtual care visit – specialist,oon,coinsurance,,50,true,,,,,
+opt_up_1000,virtual_doctor_on_demand,Professional services,Virtual care visit – Doctor on Demand,tier1,no_charge,,,false,,,,,
+opt_up_1000,virtual_doctor_on_demand,Professional services,Virtual care visit – Doctor on Demand,tier2,no_charge,,,false,,,,,
+opt_up_1000,virtual_doctor_on_demand,Professional services,Virtual care visit – Doctor on Demand,oon,not_covered,,,,,,,,
+opt_up_1000,preventive_care,Professional services,Preventive care / screening / immunization,tier1,no_charge,,,false,,,,,Non-preventive services provided during a preventive visit may have cost-sharing.
+opt_up_1000,preventive_care,Professional services,Preventive care / screening / immunization,tier2,no_charge,,,false,,,,,Non-preventive services provided during a preventive visit may have cost-sharing.
+opt_up_1000,preventive_care,Professional services,Preventive care / screening / immunization,oon,not_covered,,,,,,,,Non-preventive services provided during a preventive visit may have cost-sharing.
+opt_up_1000,allergy_services,Professional services,"Allergy services (injections, serum, testing)",tier1,no_charge,,,false,,,,,
+opt_up_1000,allergy_services,Professional services,"Allergy services (injections, serum, testing)",tier2,coinsurance,,20,true,,,,,
+opt_up_1000,allergy_services,Professional services,"Allergy services (injections, serum, testing)",oon,coinsurance,,50,true,,,,,
+opt_up_1000,lab,Professional services,Laboratory services,tier1,no_charge,,,false,,,,,
+opt_up_1000,lab,Professional services,Laboratory services,tier2,copay,10,,false,,,,,
+opt_up_1000,lab,Professional services,Laboratory services,oon,coinsurance,,50,true,,,,,
+opt_up_1000,xray_diagnostic_imaging,Professional services,X-rays and diagnostic imaging,tier1,no_charge,,,false,,,,,
+opt_up_1000,xray_diagnostic_imaging,Professional services,X-rays and diagnostic imaging,tier2,coinsurance,,20,true,,,,,
+opt_up_1000,xray_diagnostic_imaging,Professional services,X-rays and diagnostic imaging,oon,coinsurance,,50,true,,,,,
+opt_up_1000,advanced_imaging,Professional services,"Advanced imaging (MRI, CT, PET)",tier1,no_charge,,,false,,,,certain_services,
+opt_up_1000,advanced_imaging,Professional services,"Advanced imaging (MRI, CT, PET)",tier2,coinsurance,,20,true,,,,certain_services,
+opt_up_1000,advanced_imaging,Professional services,"Advanced imaging (MRI, CT, PET)",oon,coinsurance,,50,true,,,,certain_services,
+opt_up_1000,er_facility,Emergency & urgent care,Emergency room facility fee,tier1,copay,500,,false,,,,,
+opt_up_1000,er_facility,Emergency & urgent care,Emergency room facility fee,tier2,copay,500,,false,,,,,
+opt_up_1000,er_facility,Emergency & urgent care,Emergency room facility fee,oon,copay,500,,false,,,,,
+opt_up_1000,er_physician,Emergency & urgent care,Emergency room physician fee,tier1,coinsurance,,20,false,,,,,
+opt_up_1000,er_physician,Emergency & urgent care,Emergency room physician fee,tier2,coinsurance,,20,true,,,,,
+opt_up_1000,er_physician,Emergency & urgent care,Emergency room physician fee,oon,coinsurance,,20,true,,,,,
+opt_up_1000,urgent_care,Emergency & urgent care,Urgent care center,tier1,copay,50,,false,,,,,
+opt_up_1000,urgent_care,Emergency & urgent care,Urgent care center,tier2,copay,50,,false,,,,,
+opt_up_1000,urgent_care,Emergency & urgent care,Urgent care center,oon,coinsurance,,50,true,,,,,
+opt_up_1000,ambulance,Emergency & urgent care,Ambulance / emergency transport (air and ground),tier1,coinsurance,,20,false,,,,certain_services,
+opt_up_1000,ambulance,Emergency & urgent care,Ambulance / emergency transport (air and ground),tier2,coinsurance,,20,true,,,,certain_services,
+opt_up_1000,ambulance,Emergency & urgent care,Ambulance / emergency transport (air and ground),oon,coinsurance,,20,true,,,,certain_services,
+opt_up_1000,outpatient_surgery_facility,Outpatient services,Outpatient hospital surgery facility,tier1,no_charge,,,false,,,,certain_services,
+opt_up_1000,outpatient_surgery_facility,Outpatient services,Outpatient hospital surgery facility,tier2,coinsurance,,20,true,,,,certain_services,
+opt_up_1000,outpatient_surgery_facility,Outpatient services,Outpatient hospital surgery facility,oon,coinsurance,,50,true,,,,certain_services,
+opt_up_1000,outpatient_surgeon,Outpatient services,Outpatient physician/surgeon,tier1,no_charge,,,false,,,,,
+opt_up_1000,outpatient_surgeon,Outpatient services,Outpatient physician/surgeon,tier2,coinsurance,,20,true,,,,,
+opt_up_1000,outpatient_surgeon,Outpatient services,Outpatient physician/surgeon,oon,coinsurance,,50,true,,,,,
+opt_up_1000,outpatient_rehab,Outpatient services,"Outpatient rehabilitation (PT, OT, speech)",tier1,no_charge,,,false,20,visits,"each of PT, OT, speech",certain_services,
+opt_up_1000,outpatient_rehab,Outpatient services,"Outpatient rehabilitation (PT, OT, speech)",tier2,copay,30,,false,20,visits,"each of PT, OT, speech",certain_services,
+opt_up_1000,outpatient_rehab,Outpatient services,"Outpatient rehabilitation (PT, OT, speech)",oon,coinsurance,,50,true,20,visits,"each of PT, OT, speech",certain_services,
+opt_up_1000,outpatient_habilitation,Outpatient services,"Outpatient habilitation (PT, OT, speech)",tier1,no_charge,,,false,20,visits,"each of PT, OT, speech",certain_services,
+opt_up_1000,outpatient_habilitation,Outpatient services,"Outpatient habilitation (PT, OT, speech)",tier2,copay,30,,false,20,visits,"each of PT, OT, speech",certain_services,
+opt_up_1000,outpatient_habilitation,Outpatient services,"Outpatient habilitation (PT, OT, speech)",oon,coinsurance,,50,true,20,visits,"each of PT, OT, speech",certain_services,
+opt_up_1000,outpatient_anesthesia,Outpatient services,Outpatient anesthesia,tier1,no_charge,,,false,,,,,
+opt_up_1000,outpatient_anesthesia,Outpatient services,Outpatient anesthesia,tier2,coinsurance,,20,true,,,,,
+opt_up_1000,outpatient_anesthesia,Outpatient services,Outpatient anesthesia,oon,coinsurance,,50,true,,,,,
+opt_up_1000,outpatient_hospice,Outpatient services,Outpatient hospice,tier1,no_charge,,,false,,,,,
+opt_up_1000,outpatient_hospice,Outpatient services,Outpatient hospice,tier2,coinsurance,,20,true,,,,,
+opt_up_1000,outpatient_hospice,Outpatient services,Outpatient hospice,oon,coinsurance,,50,true,,,,,
+opt_up_1000,inpatient_facility,Inpatient services,Inpatient hospital facility,tier1,no_charge,,,false,,,,required,
+opt_up_1000,inpatient_facility,Inpatient services,Inpatient hospital facility,tier2,coinsurance,,20,true,,,,required,
+opt_up_1000,inpatient_facility,Inpatient services,Inpatient hospital facility,oon,coinsurance,,50,true,,,,required,
+opt_up_1000,inpatient_surgeon,Inpatient services,Inpatient physician/surgeon,tier1,no_charge,,,false,,,,,
+opt_up_1000,inpatient_surgeon,Inpatient services,Inpatient physician/surgeon,tier2,coinsurance,,20,true,,,,,
+opt_up_1000,inpatient_surgeon,Inpatient services,Inpatient physician/surgeon,oon,coinsurance,,50,true,,,,,
+opt_up_1000,skilled_nursing,Inpatient services,Skilled nursing facility,tier1,no_charge,,,false,60,days,,required,
+opt_up_1000,skilled_nursing,Inpatient services,Skilled nursing facility,tier2,coinsurance,,20,true,60,days,,required,
+opt_up_1000,skilled_nursing,Inpatient services,Skilled nursing facility,oon,coinsurance,,50,true,60,days,,required,
+opt_up_1000,inpatient_rehab,Inpatient services,"Inpatient rehabilitation (PT, OT, speech)",tier1,no_charge,,,false,,,,certain_services,
+opt_up_1000,inpatient_rehab,Inpatient services,"Inpatient rehabilitation (PT, OT, speech)",tier2,coinsurance,,20,true,,,,certain_services,
+opt_up_1000,inpatient_rehab,Inpatient services,"Inpatient rehabilitation (PT, OT, speech)",oon,coinsurance,,50,true,,,,certain_services,
+opt_up_1000,inpatient_anesthesia,Inpatient services,Inpatient anesthesia,tier1,no_charge,,,false,,,,,
+opt_up_1000,inpatient_anesthesia,Inpatient services,Inpatient anesthesia,tier2,coinsurance,,20,true,,,,,
+opt_up_1000,inpatient_anesthesia,Inpatient services,Inpatient anesthesia,oon,coinsurance,,50,true,,,,,
+opt_up_1000,inpatient_hospice,Inpatient services,Inpatient hospice,tier1,no_charge,,,false,,,,certain_services,
+opt_up_1000,inpatient_hospice,Inpatient services,Inpatient hospice,tier2,coinsurance,,20,true,,,,certain_services,
+opt_up_1000,inpatient_hospice,Inpatient services,Inpatient hospice,oon,coinsurance,,50,true,,,,certain_services,
+opt_up_1000,prenatal_postnatal,Maternity & newborn care,Prenatal & postnatal care,tier1,no_charge,,,false,,,,,Routine ACOG prenatal visit sequence. Some preventive prenatal services have no cost-sharing (SBC).
+opt_up_1000,prenatal_postnatal,Maternity & newborn care,Prenatal & postnatal care,tier2,coinsurance,,20,true,,,,,Routine ACOG prenatal visit sequence. Some preventive prenatal services have no cost-sharing (SBC).
+opt_up_1000,prenatal_postnatal,Maternity & newborn care,Prenatal & postnatal care,oon,coinsurance,,50,true,,,,,Routine ACOG prenatal visit sequence. Some preventive prenatal services have no cost-sharing (SBC).
+opt_up_1000,birth_facility,Maternity & newborn care,Inpatient hospital & birthing center facility,tier1,no_charge,,,false,,,,,Preauthorization needed if stay exceeds 48h (vaginal) or 96h (cesarean).
+opt_up_1000,birth_facility,Maternity & newborn care,Inpatient hospital & birthing center facility,tier2,coinsurance,,20,true,,,,,Preauthorization needed if stay exceeds 48h (vaginal) or 96h (cesarean).
+opt_up_1000,birth_facility,Maternity & newborn care,Inpatient hospital & birthing center facility,oon,coinsurance,,50,true,,,,,Preauthorization needed if stay exceeds 48h (vaginal) or 96h (cesarean).
+opt_up_1000,newborn_care,Maternity & newborn care,Newborn care,tier1,no_charge,,,false,,,,,
+opt_up_1000,newborn_care,Maternity & newborn care,Newborn care,tier2,coinsurance,,20,true,,,,,
+opt_up_1000,newborn_care,Maternity & newborn care,Newborn care,oon,coinsurance,,50,true,,,,,
+opt_up_1000,acupuncture,"Additional services, equipment & devices",Acupuncture,tier1,no_charge,,,false,20,visits,,,
+opt_up_1000,acupuncture,"Additional services, equipment & devices",Acupuncture,tier2,copay,30,,false,20,visits,,,
+opt_up_1000,acupuncture,"Additional services, equipment & devices",Acupuncture,oon,coinsurance,,50,true,20,visits,,,
+opt_up_1000,blood_administration,"Additional services, equipment & devices",Blood and administration,tier1,no_charge,,,false,,,,,
+opt_up_1000,blood_administration,"Additional services, equipment & devices",Blood and administration,tier2,coinsurance,,20,true,,,,,
+opt_up_1000,blood_administration,"Additional services, equipment & devices",Blood and administration,oon,coinsurance,,50,true,,,,,
+opt_up_1000,chemotherapy,"Additional services, equipment & devices",Chemotherapy,tier1,no_charge,,,false,,,,required,
+opt_up_1000,chemotherapy,"Additional services, equipment & devices",Chemotherapy,tier2,coinsurance,,20,true,,,,required,
+opt_up_1000,chemotherapy,"Additional services, equipment & devices",Chemotherapy,oon,coinsurance,,50,true,,,,required,
+opt_up_1000,chiropractic,"Additional services, equipment & devices",Chiropractic care,tier1,no_charge,,,false,20,visits,,,
+opt_up_1000,chiropractic,"Additional services, equipment & devices",Chiropractic care,tier2,copay,30,,false,20,visits,,,
+opt_up_1000,chiropractic,"Additional services, equipment & devices",Chiropractic care,oon,coinsurance,,50,true,20,visits,,,
+opt_up_1000,cochlear_implants,"Additional services, equipment & devices",Cochlear implants,tier1,no_charge,,,false,,,,required,
+opt_up_1000,cochlear_implants,"Additional services, equipment & devices",Cochlear implants,tier2,coinsurance,,20,true,,,,required,
+opt_up_1000,cochlear_implants,"Additional services, equipment & devices",Cochlear implants,oon,coinsurance,,50,true,,,,required,
+opt_up_1000,diabetic_equipment,"Additional services, equipment & devices",Diabetic equipment,tier1,no_charge,,,false,,,,certain_services,
+opt_up_1000,diabetic_equipment,"Additional services, equipment & devices",Diabetic equipment,tier2,coinsurance,,20,true,,,,certain_services,
+opt_up_1000,diabetic_equipment,"Additional services, equipment & devices",Diabetic equipment,oon,coinsurance,,50,true,,,,certain_services,
+opt_up_1000,diabetic_supplies,"Additional services, equipment & devices",Diabetic supplies,tier1,no_charge,,,false,,,,certain_services,
+opt_up_1000,diabetic_supplies,"Additional services, equipment & devices",Diabetic supplies,tier2,coinsurance,,20,true,,,,certain_services,
+opt_up_1000,diabetic_supplies,"Additional services, equipment & devices",Diabetic supplies,oon,coinsurance,,50,true,,,,certain_services,
+opt_up_1000,dme_prosthetics_orthotics,"Additional services, equipment & devices","Durable medical equipment, prosthetics & orthotics",tier1,no_charge,,,false,,,,certain_services,
+opt_up_1000,dme_prosthetics_orthotics,"Additional services, equipment & devices","Durable medical equipment, prosthetics & orthotics",tier2,coinsurance,,20,true,,,,certain_services,
+opt_up_1000,dme_prosthetics_orthotics,"Additional services, equipment & devices","Durable medical equipment, prosthetics & orthotics",oon,coinsurance,,50,true,,,,certain_services,
+opt_up_1000,hearing_aids,"Additional services, equipment & devices",Hearing aids,tier1,not_covered,,,,,,,,
+opt_up_1000,hearing_aids,"Additional services, equipment & devices",Hearing aids,tier2,not_covered,,,,,,,,
+opt_up_1000,hearing_aids,"Additional services, equipment & devices",Hearing aids,oon,not_covered,,,,,,,,
+opt_up_1000,home_health,"Additional services, equipment & devices",Home health care,tier1,no_charge,,,false,100,visits,,required,"SBC says ""100 days"" and preauth ""for certain services""; Schedule of Benefits says 100 visits, preauth required."
+opt_up_1000,home_health,"Additional services, equipment & devices",Home health care,tier2,coinsurance,,20,true,100,visits,,required,"SBC says ""100 days"" and preauth ""for certain services""; Schedule of Benefits says 100 visits, preauth required."
+opt_up_1000,home_health,"Additional services, equipment & devices",Home health care,oon,coinsurance,,50,true,100,visits,,required,"SBC says ""100 days"" and preauth ""for certain services""; Schedule of Benefits says 100 visits, preauth required."
+opt_up_1000,infertility,"Additional services, equipment & devices",Infertility services,tier1,not_covered,,,,,,,,
+opt_up_1000,infertility,"Additional services, equipment & devices",Infertility services,tier2,not_covered,,,,,,,,
+opt_up_1000,infertility,"Additional services, equipment & devices",Infertility services,oon,not_covered,,,,,,,,
+opt_up_1000,iv_therapy,"Additional services, equipment & devices",Intravenous therapy,tier1,no_charge,,,false,,,,required,
+opt_up_1000,iv_therapy,"Additional services, equipment & devices",Intravenous therapy,tier2,coinsurance,,20,true,,,,required,
+opt_up_1000,iv_therapy,"Additional services, equipment & devices",Intravenous therapy,oon,coinsurance,,50,true,,,,required,
+opt_up_1000,misc_medical_supplies,"Additional services, equipment & devices",Miscellaneous medical supplies,tier1,no_charge,,,false,,,,,
+opt_up_1000,misc_medical_supplies,"Additional services, equipment & devices",Miscellaneous medical supplies,tier2,coinsurance,,20,true,,,,,
+opt_up_1000,misc_medical_supplies,"Additional services, equipment & devices",Miscellaneous medical supplies,oon,coinsurance,,50,true,,,,,
+opt_up_1000,nutritional_counseling,"Additional services, equipment & devices",Nutritional counseling,tier1,no_charge,,,false,,,,,
+opt_up_1000,nutritional_counseling,"Additional services, equipment & devices",Nutritional counseling,tier2,coinsurance,,20,true,,,,,
+opt_up_1000,nutritional_counseling,"Additional services, equipment & devices",Nutritional counseling,oon,coinsurance,,50,true,,,,,
+opt_up_1000,pre_admission_testing,"Additional services, equipment & devices",Pre-admission testing,tier1,no_charge,,,false,,,,,
+opt_up_1000,pre_admission_testing,"Additional services, equipment & devices",Pre-admission testing,tier2,coinsurance,,20,true,,,,,
+opt_up_1000,pre_admission_testing,"Additional services, equipment & devices",Pre-admission testing,oon,coinsurance,,50,true,,,,,
+opt_up_1000,pulmonary_respiratory_therapy,"Additional services, equipment & devices",Pulmonary and respiratory therapy,tier1,no_charge,,,false,,,,,
+opt_up_1000,pulmonary_respiratory_therapy,"Additional services, equipment & devices",Pulmonary and respiratory therapy,tier2,coinsurance,,20,true,,,,,
+opt_up_1000,pulmonary_respiratory_therapy,"Additional services, equipment & devices",Pulmonary and respiratory therapy,oon,coinsurance,,50,true,,,,,
+opt_up_1000,radiation_therapy,"Additional services, equipment & devices",Radiation therapy,tier1,no_charge,,,false,,,,,
+opt_up_1000,radiation_therapy,"Additional services, equipment & devices",Radiation therapy,tier2,coinsurance,,20,true,,,,,
+opt_up_1000,radiation_therapy,"Additional services, equipment & devices",Radiation therapy,oon,coinsurance,,50,true,,,,,
+opt_up_1000,sleep_study,"Additional services, equipment & devices",Sleep study,tier1,no_charge,,,false,,,,,
+opt_up_1000,sleep_study,"Additional services, equipment & devices",Sleep study,tier2,coinsurance,,20,true,,,,,
+opt_up_1000,sleep_study,"Additional services, equipment & devices",Sleep study,oon,coinsurance,,50,true,,,,,
+opt_up_1000,tmj,"Additional services, equipment & devices",Temporomandibular joint (TMJ) services,tier1,not_covered,,,,,,,,
+opt_up_1000,tmj,"Additional services, equipment & devices",Temporomandibular joint (TMJ) services,tier2,not_covered,,,,,,,,
+opt_up_1000,tmj,"Additional services, equipment & devices",Temporomandibular joint (TMJ) services,oon,not_covered,,,,,,,,
+opt_up_1000,transplant,"Additional services, equipment & devices",Transplant,tier1,no_charge,,,false,,,,required,
+opt_up_1000,transplant,"Additional services, equipment & devices",Transplant,tier2,coinsurance,,20,true,,,,required,
+opt_up_1000,transplant,"Additional services, equipment & devices",Transplant,oon,coinsurance,,50,true,,,,required,
+opt_up_1000,all_other_covered,"Additional services, equipment & devices",All other covered services,tier1,varies,,,,,,,,"Based on place of service and subject to applicable copay, coinsurance and/or deductible."
+opt_up_1000,all_other_covered,"Additional services, equipment & devices",All other covered services,tier2,varies,,,,,,,,"Based on place of service and subject to applicable copay, coinsurance and/or deductible."
+opt_up_1000,all_other_covered,"Additional services, equipment & devices",All other covered services,oon,varies,,,,,,,,"Based on place of service and subject to applicable copay, coinsurance and/or deductible."
+opt_up_1000,mh_office_visit,"Mental health, chemical dependency & substance abuse",Office visit (outpatient),tier1,no_charge,,,false,,,,,
+opt_up_1000,mh_office_visit,"Mental health, chemical dependency & substance abuse",Office visit (outpatient),tier2,copay,10,,false,,,,,
+opt_up_1000,mh_office_visit,"Mental health, chemical dependency & substance abuse",Office visit (outpatient),oon,coinsurance,,50,true,,,,,
+opt_up_1000,mh_virtual_visit,"Mental health, chemical dependency & substance abuse",Virtual care visit – MH/CD/SA provider,tier1,no_charge,,,false,,,,,
+opt_up_1000,mh_virtual_visit,"Mental health, chemical dependency & substance abuse",Virtual care visit – MH/CD/SA provider,tier2,copay,10,,false,,,,,
+opt_up_1000,mh_virtual_visit,"Mental health, chemical dependency & substance abuse",Virtual care visit – MH/CD/SA provider,oon,coinsurance,,50,true,,,,,
+opt_up_1000,mh_virtual_doctor_on_demand,"Mental health, chemical dependency & substance abuse",Virtual care visit – Doctor on Demand,tier1,no_charge,,,false,,,,,
+opt_up_1000,mh_virtual_doctor_on_demand,"Mental health, chemical dependency & substance abuse",Virtual care visit – Doctor on Demand,tier2,no_charge,,,false,,,,,
+opt_up_1000,mh_virtual_doctor_on_demand,"Mental health, chemical dependency & substance abuse",Virtual care visit – Doctor on Demand,oon,not_covered,,,,,,,,
+opt_up_1000,mh_inpatient,"Mental health, chemical dependency & substance abuse",Inpatient care,tier1,no_charge,,,false,,,,required_except_emergency,
+opt_up_1000,mh_inpatient,"Mental health, chemical dependency & substance abuse",Inpatient care,tier2,coinsurance,,20,true,,,,required_except_emergency,
+opt_up_1000,mh_inpatient,"Mental health, chemical dependency & substance abuse",Inpatient care,oon,coinsurance,,50,true,,,,required_except_emergency,
+opt_up_1000,mh_intensive_outpatient,"Mental health, chemical dependency & substance abuse",Intensive outpatient treatment,tier1,no_charge,,,false,,,,,
+opt_up_1000,mh_intensive_outpatient,"Mental health, chemical dependency & substance abuse",Intensive outpatient treatment,tier2,coinsurance,,20,true,,,,,
+opt_up_1000,mh_intensive_outpatient,"Mental health, chemical dependency & substance abuse",Intensive outpatient treatment,oon,coinsurance,,50,true,,,,,
+opt_up_1000,mh_residential,"Mental health, chemical dependency & substance abuse",Residential treatment center,tier1,no_charge,,,false,,,,required_except_emergency,
+opt_up_1000,mh_residential,"Mental health, chemical dependency & substance abuse",Residential treatment center,tier2,coinsurance,,20,true,,,,required_except_emergency,
+opt_up_1000,mh_residential,"Mental health, chemical dependency & substance abuse",Residential treatment center,oon,coinsurance,,50,true,,,,required_except_emergency,
+opt_up_1000,rx_retail_generic,Prescription drugs,Retail 31-day supply – Generic (drug tier 1),tier1,copay,10,,false,,,,certain_services,Pharmacy benefit has a single in-network column; tier1 and tier2 are identical.
+opt_up_1000,rx_retail_generic,Prescription drugs,Retail 31-day supply – Generic (drug tier 1),tier2,copay,10,,false,,,,certain_services,Pharmacy benefit has a single in-network column; tier1 and tier2 are identical.
+opt_up_1000,rx_retail_generic,Prescription drugs,Retail 31-day supply – Generic (drug tier 1),oon,not_covered,,,,,,,certain_services,Pharmacy benefit has a single in-network column; tier1 and tier2 are identical.
+opt_up_1000,rx_retail_preferred_brand,Prescription drugs,Retail 31-day supply – Preferred brand (drug tier 2),tier1,copay,30,,false,,,,certain_services,Pharmacy benefit has a single in-network column; tier1 and tier2 are identical.
+opt_up_1000,rx_retail_preferred_brand,Prescription drugs,Retail 31-day supply – Preferred brand (drug tier 2),tier2,copay,30,,false,,,,certain_services,Pharmacy benefit has a single in-network column; tier1 and tier2 are identical.
+opt_up_1000,rx_retail_preferred_brand,Prescription drugs,Retail 31-day supply – Preferred brand (drug tier 2),oon,not_covered,,,,,,,certain_services,Pharmacy benefit has a single in-network column; tier1 and tier2 are identical.
+opt_up_1000,rx_retail_non_preferred_brand,Prescription drugs,Retail 31-day supply – Non-preferred brand (drug tier 3),tier1,copay,60,,false,,,,certain_services,Pharmacy benefit has a single in-network column; tier1 and tier2 are identical.
+opt_up_1000,rx_retail_non_preferred_brand,Prescription drugs,Retail 31-day supply – Non-preferred brand (drug tier 3),tier2,copay,60,,false,,,,certain_services,Pharmacy benefit has a single in-network column; tier1 and tier2 are identical.
+opt_up_1000,rx_retail_non_preferred_brand,Prescription drugs,Retail 31-day supply – Non-preferred brand (drug tier 3),oon,not_covered,,,,,,,certain_services,Pharmacy benefit has a single in-network column; tier1 and tier2 are identical.
+opt_up_1000,rx_retail_specialty,Prescription drugs,Retail 31-day supply – Specialty (drug tier 4),tier1,coinsurance,,20,true,,,,certain_services,20% after the Tier 2 (in-network) deductible. Pharmacy benefit has a single in-network column; tier1 and tier2 are identical.
+opt_up_1000,rx_retail_specialty,Prescription drugs,Retail 31-day supply – Specialty (drug tier 4),tier2,coinsurance,,20,true,,,,certain_services,20% after the Tier 2 (in-network) deductible. Pharmacy benefit has a single in-network column; tier1 and tier2 are identical.
+opt_up_1000,rx_retail_specialty,Prescription drugs,Retail 31-day supply – Specialty (drug tier 4),oon,not_covered,,,,,,,certain_services,20% after the Tier 2 (in-network) deductible. Pharmacy benefit has a single in-network column; tier1 and tier2 are identical.
+opt_up_1000,rx_mail_generic,Prescription drugs,Mail order 90-day supply – Generic (drug tier 1),tier1,copay,25,,false,,,,certain_services,Pharmacy benefit has a single in-network column; tier1 and tier2 are identical.
+opt_up_1000,rx_mail_generic,Prescription drugs,Mail order 90-day supply – Generic (drug tier 1),tier2,copay,25,,false,,,,certain_services,Pharmacy benefit has a single in-network column; tier1 and tier2 are identical.
+opt_up_1000,rx_mail_generic,Prescription drugs,Mail order 90-day supply – Generic (drug tier 1),oon,not_covered,,,,,,,certain_services,Pharmacy benefit has a single in-network column; tier1 and tier2 are identical.
+opt_up_1000,rx_mail_preferred_brand,Prescription drugs,Mail order 90-day supply – Preferred brand (drug tier 2),tier1,copay,75,,false,,,,certain_services,Pharmacy benefit has a single in-network column; tier1 and tier2 are identical.
+opt_up_1000,rx_mail_preferred_brand,Prescription drugs,Mail order 90-day supply – Preferred brand (drug tier 2),tier2,copay,75,,false,,,,certain_services,Pharmacy benefit has a single in-network column; tier1 and tier2 are identical.
+opt_up_1000,rx_mail_preferred_brand,Prescription drugs,Mail order 90-day supply – Preferred brand (drug tier 2),oon,not_covered,,,,,,,certain_services,Pharmacy benefit has a single in-network column; tier1 and tier2 are identical.
+opt_up_1000,rx_mail_non_preferred_brand,Prescription drugs,Mail order 90-day supply – Non-preferred brand (drug tier 3),tier1,copay,150,,false,,,,certain_services,Pharmacy benefit has a single in-network column; tier1 and tier2 are identical.
+opt_up_1000,rx_mail_non_preferred_brand,Prescription drugs,Mail order 90-day supply – Non-preferred brand (drug tier 3),tier2,copay,150,,false,,,,certain_services,Pharmacy benefit has a single in-network column; tier1 and tier2 are identical.
+opt_up_1000,rx_mail_non_preferred_brand,Prescription drugs,Mail order 90-day supply – Non-preferred brand (drug tier 3),oon,not_covered,,,,,,,certain_services,Pharmacy benefit has a single in-network column; tier1 and tier2 are identical.
+opt_up_1000,rx_mail_specialty,Prescription drugs,Mail order 90-day supply – Specialty (drug tier 4),tier1,not_covered,,,,,,,certain_services,Specialty drugs are only available as a 31-day retail supply.
+opt_up_1000,rx_mail_specialty,Prescription drugs,Mail order 90-day supply – Specialty (drug tier 4),tier2,not_covered,,,,,,,certain_services,Specialty drugs are only available as a 31-day retail supply.
+opt_up_1000,rx_mail_specialty,Prescription drugs,Mail order 90-day supply – Specialty (drug tier 4),oon,not_covered,,,,,,,certain_services,Specialty drugs are only available as a 31-day retail supply.
+opt_up_1000,dental,Dental & vision (adult & child),Dental services,tier1,not_covered,,,,,,,,
+opt_up_1000,dental,Dental & vision (adult & child),Dental services,tier2,not_covered,,,,,,,,
+opt_up_1000,dental,Dental & vision (adult & child),Dental services,oon,not_covered,,,,,,,,
+opt_up_1000,vision_exam,Dental & vision (adult & child),Vision exams,tier1,not_covered,,,,,,,,
+opt_up_1000,vision_exam,Dental & vision (adult & child),Vision exams,tier2,not_covered,,,,,,,,
+opt_up_1000,vision_exam,Dental & vision (adult & child),Vision exams,oon,not_covered,,,,,,,,
+opt_up_1000,eyewear,Dental & vision (adult & child),"Lenses, frames and contact lenses",tier1,not_covered,,,,,,,,
+opt_up_1000,eyewear,Dental & vision (adult & child),"Lenses, frames and contact lenses",tier2,not_covered,,,,,,,,
+opt_up_1000,eyewear,Dental & vision (adult & child),"Lenses, frames and contact lenses",oon,not_covered,,,,,,,,
