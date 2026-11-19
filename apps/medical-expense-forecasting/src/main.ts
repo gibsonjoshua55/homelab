@@ -1,62 +1,70 @@
-import { calculateYear, expandRecurring, type YearResult } from './calculate.js';
-import { annualPremiums, expenses, YEAR } from './household.js';
-import { loadPlans, type Plan } from './plans.js';
+import { expandRecurring } from './calculate.js';
+import { annualCost, marginalRate, type AnnualCost } from './finances.js';
+import { annualPremiums, expenses, fsaContributions, tax, uncoveredExpenses, YEAR } from './household.js';
+import { loadPlans } from './plans.js';
 
-const usd = (n: number) => `$${Math.round(n).toLocaleString('en-US')}`;
+const usd = (n: number) => `${n < 0 ? '-' : ''}$${Math.round(Math.abs(n)).toLocaleString('en-US')}`;
+const pct = (n: number) => `${(n * 100).toFixed(2).replace(/\.?0+$/, '')}%`;
 
 const plans = loadPlans();
 const claims = expandRecurring(expenses, YEAR);
-const people = [...new Set(expenses.map((e) => e.person))];
+const people = [...new Set([...expenses, ...uncoveredExpenses].map((e) => e.person))];
+
+const results = plans.map((plan) => {
+  const premium = annualPremiums[plan.id];
+  const fsaContribution = fsaContributions[plan.id];
+  if (premium === undefined || fsaContribution === undefined) {
+    throw new Error(`household.ts needs a premium and FSA contribution for ${plan.id}`);
+  }
+  return { plan, cost: annualCost(plan, claims, { premium, fsaContribution, tax, uncovered: uncoveredExpenses }) };
+});
 
 console.log(`Medical expense forecast for ${YEAR}\n`);
-console.log('Expenses:');
+console.log('Covered care:');
 for (const e of expenses) {
   const price = e.allowedAmount === undefined ? '' : `, $${e.allowedAmount.toFixed(2)} allowed each`;
   console.log(`  ${e.person}: ${e.timesPerYear}x ${e.serviceId} (${e.network}${price})`);
 }
+console.log('Not covered:');
+for (const u of uncoveredExpenses) {
+  console.log(`  ${u.person}: ${u.timesPerYear}x ${u.description} ($${u.amount.toFixed(2)} each${u.fsaEligible ? ', FSA-eligible' : ''})`);
+}
 console.log();
 
-const results: { plan: Plan; result: YearResult; premium: number | undefined }[] = plans.map((plan) => ({
-  plan,
-  result: calculateYear(plan, claims),
-  premium: annualPremiums[plan.id],
-}));
+type Row = [label: string, value: (c: AnnualCost) => number] | [heading: string];
+const rows: Row[] = [
+  ['Spending'],
+  ['Premiums', (c) => c.premium],
+  ...people.map((p): Row => [`Covered care: ${p}`, (c) => c.coveredByPerson.get(p)?.total ?? 0]),
+  ...uncoveredExpenses.map((u, i): Row => [`Not covered: ${u.description} (${u.person})`, (c) => c.uncovered[i]!.total]),
+  ['Total spending', (c) => c.totalSpending],
+  ['How it gets paid'],
+  ['Premiums (payroll)', (c) => c.premium],
+  ['From FSA', (c) => c.fsaUsed],
+  ['With take-home pay', (c) => c.paidPostTax],
+  ['FSA money left unspent (lost)', (c) => c.fsaForfeited],
+  [`Tax savings at ${pct(marginalRate(tax))} (${pct(tax.federal)} federal + ${pct(tax.state)} state + ${pct(tax.fica)} FICA)`],
+  [`On premiums${tax.premiumsPreTax ? '' : ' (premiums are after-tax)'}`, (c) => -c.taxSavedOnPremium],
+  ['On FSA contribution', (c) => -c.taxSavedByFsa],
+  ['Net cost', (c) => c.netCost],
+];
 
-const columns = ['Plan', ...people, 'Deductible', 'Copays', 'Coinsurance', 'Not covered', 'Out of pocket', 'Premium', 'Total'];
-const rows = results.map(({ plan, result, premium }) => [
-  plan.id,
-  ...people.map((p) => usd(result.byPerson.get(p)?.total ?? 0)),
-  usd(result.total.deductible),
-  usd(result.total.copays),
-  usd(result.total.coinsurance),
-  usd(result.total.notCovered),
-  usd(result.total.total),
-  premium === undefined ? '?' : usd(premium),
-  premium === undefined ? '?' : usd(result.total.total + premium),
-]);
-const widths = columns.map((c, i) => Math.max(c.length, ...rows.map((r) => r[i]!.length)));
-const line = (cells: string[]) => cells.map((c, i) => (i === 0 ? c.padEnd(widths[i]!) : c.padStart(widths[i]!))).join('  ');
-console.log(line(columns));
-for (const row of rows) console.log(line(row));
+const header = ['', ...results.map((r) => r.plan.id)];
+const table = rows.map((row) => (row.length === 1 ? [row[0]] : ['  ' + row[0], ...results.map((r) => usd(row[1](r.cost)))]));
+const widths = header.map((h, i) => Math.max(h.length, ...table.filter((t) => t.length > 1).map((t) => t[i]!.length)));
+const line = (cells: string[]) => cells.map((c, i) => (i === 0 ? c.padEnd(widths[0]!) : c.padStart(widths[i]!))).join('  ');
+
+console.log(line(header));
+for (const cells of table) console.log(cells.length === 1 ? `\n${cells[0]}` : line(cells));
 console.log();
 
-const allPremiumsKnown = results.every((r) => r.premium !== undefined);
-const cost = (r: (typeof results)[number]) => r.result.total.total + (allPremiumsKnown ? r.premium! : 0);
-const [best, ...others] = [...results].sort((a, b) => cost(a) - cost(b));
-
+const [best, ...others] = [...results].sort((a, b) => a.cost.netCost - b.cost.netCost);
 for (const other of others) {
-  const oopSavings = other.result.total.total - best!.result.total.total;
-  if (allPremiumsKnown) {
-    const premiumDiff = best!.premium! - other.premium!;
-    console.log(
-      `${best!.plan.id} is cheaper by ${usd(cost(other) - cost(best!))}/yr: ` +
-        `${usd(Math.abs(premiumDiff))} ${premiumDiff < 0 ? 'less' : 'more'} in premiums, ` +
-        `${usd(Math.abs(oopSavings))} ${oopSavings >= 0 ? 'less' : 'more'} out of pocket than ${other.plan.id}.`,
-    );
-  } else {
-    console.log(
-      `${best!.plan.id} costs ${usd(oopSavings)}/yr less out of pocket than ${other.plan.id}. ` +
-        `It's the better deal if its premium is less than ${usd(oopSavings)}/yr (${usd(oopSavings / 12)}/mo) more.`,
-    );
-  }
+  const premiumGap = (other.cost.premium - other.cost.taxSavedOnPremium) - (best!.cost.premium - best!.cost.taxSavedOnPremium);
+  const careGap = other.cost.netCost - best!.cost.netCost - premiumGap;
+  console.log(
+    `${best!.plan.id} is cheaper than ${other.plan.id} by ${usd(other.cost.netCost - best!.cost.netCost)}/yr after taxes: ` +
+      `its premiums cost ${usd(Math.abs(premiumGap))} ${premiumGap < 0 ? 'more' : 'less'} after tax savings, ` +
+      `and care costs ${usd(Math.abs(careGap))} ${careGap > 0 ? 'less' : 'more'}.`,
+  );
 }

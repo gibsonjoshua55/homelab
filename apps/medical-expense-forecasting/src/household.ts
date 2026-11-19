@@ -1,4 +1,5 @@
 import type { RecurringExpense } from './calculate.js';
+import type { TaxRates, UncoveredExpense } from './finances.js';
 
 // Edit this file to describe the year you expect.
 
@@ -7,13 +8,24 @@ export const YEAR = 2027;
 /** Paid twice a month. */
 const PAYCHECKS_PER_YEAR = 24;
 
-/**
- * Yearly premium per plan, keyed by plan_id from plans.csv. Not in the plan PDFs; leave
- * undefined if unknown and the report shows the break-even premium difference instead.
- */
-export const annualPremiums: Record<string, number | undefined> = {
+/** Yearly premium per plan, keyed by plan_id from plans.csv. */
+export const annualPremiums: Record<string, number> = {
   base_4000: 270.29 * PAYCHECKS_PER_YEAR,
   opt_up_1000: 383.56 * PAYCHECKS_PER_YEAR,
+};
+
+/** Yearly FSA contribution per plan. $3,500 is the max; unspent money is lost at year end. */
+export const fsaContributions: Record<string, number> = {
+  base_4000: 3500,
+  opt_up_1000: 3500,
+};
+
+/** Marginal tax rates: what a pre-tax dollar of premium or FSA contribution avoids. */
+export const tax: TaxRates = {
+  federal: 0.22,
+  state: 0.045,
+  fica: 0.0765,
+  premiumsPreTax: true,
 };
 
 // Allowed amounts (the plan's negotiated price) per visit. They only change the result for
@@ -22,20 +34,20 @@ const THERAPY_SESSION = 150;
 const PT_SESSION = 150;
 
 export const expenses: RecurringExpense[] = [
-  // Mental health therapy every 2 weeks, each.
+  // Mental health therapy every 2 weeks each, less a few missed sessions.
   {
     person: 'me',
     serviceId: 'mh_office_visit',
     network: 'tier2',
     allowedAmount: THERAPY_SESSION,
-    timesPerYear: 26,
+    timesPerYear: 22,
   },
   {
     person: 'wife',
     serviceId: 'mh_office_visit',
     network: 'tier2',
     allowedAmount: THERAPY_SESSION,
-    timesPerYear: 26,
+    timesPerYear: 22,
   },
   // Physical therapy, up to the plan's 20-visit yearly limit.
   {
@@ -61,5 +73,16 @@ export const expenses: RecurringExpense[] = [
     network: 'tier2',
     allowedAmount: 12.5,
     timesPerYear: 12,
+  },
+];
+
+/** Costs the plan doesn't cover at all. These are the same under every plan. */
+export const uncoveredExpenses: UncoveredExpense[] = [
+  {
+    person: 'wife',
+    description: 'Non-covered prescription',
+    amount: 200,
+    timesPerYear: 12,
+    fsaEligible: true,
   },
 ];
